@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="所有旅行故事 - 漫游BLOG">
+    <title>Stories - 漫游BLOG</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">rOamlOOm</div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="vlog.html">Vlog</a></li>
+                    <li><a href="sketch.html">Sketch</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-btn" id="search-toggle" title="搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn" id="theme-toggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>所有漫游故事</h1>
+            <p>探索我去过的每一个城市，每一段旅程</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- World Map with Travel Route -->
+        <section class="map-container">
+            <h2 class="map-title">我的漫游地图</h2>
+            <div class="map-wrapper">
+                <svg class="world-map" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <style>
+                            .map-land { fill: var(--map-land); stroke: var(--map-border); stroke-width: 0.5; }
+                            .map-ocean { fill: var(--map-ocean); }
+                            .map-path { stroke: var(--accent-main); stroke-width: 2; fill: none; stroke-dasharray: 5,5; opacity: 0.6; }
+                            .map-city-visited { fill: var(--map-visited); cursor: pointer; transition: r 0.3s ease; }
+                            .map-city-visited:hover { r: 10; }
+                            .map-city-wishlist { fill: var(--map-wishlist); cursor: pointer; transition: r 0.3s ease; }
+                            .map-city-wishlist:hover { r: 10; }
+                            .map-label { font-size: 11px; fill: var(--text-secondary); pointer-events: none; }
+                        </style>
+                    </defs>
+                    
+                    <!-- Ocean Background -->
+                    <rect class="map-ocean" width="1000" height="600"/>
+                    
+                    <!-- Simplified World Map Continents -->
+                    <!-- North America -->
+                    <path class="map-land" d="M 100 150 L 150 120 L 160 180 L 140 220 L 100 200 Z"/>
+                    
+                    <!-- South America -->
+                    <path class="map-land" d="M 130 250 L 160 240 L 170 350 L 140 360 Z"/>
+                    
+                    <!-- Europe -->
+                    <path class="map-land" d="M 350 100 L 420 90 L 450 140 L 420 160 L 380 150 Z"/>
+                    
+                    <!-- Africa -->
+                    <path class="map-land" d="M 400 180 L 480 160 L 500 320 L 450 340 L 420 280 Z"/>
+                    
+                    <!-- Asia -->
+                    <path class="map-land" d="M 450 100 L 600 80 L 700 150 L 680 250 L 550 280 L 480 200 Z"/>
+                    
+                    <!-- Australia -->
+                    <path class="map-land" d="M 650 350 L 700 340 L 710 400 L 660 410 Z"/>
+                    
+                    <!-- Travel Path (connecting visited cities) -->
+                    <polyline class="map-path" points="380,140 400,130 420,145 450,135 480,150 520,120 550,100"/>
+                    
+                    <!-- Cities - Visited (Blue) - 东欧城市 -->
+                    <circle class="map-city-visited" cx="380" cy="140" r="8" data-city="Vienna" title="维也纳"></circle>
+                    <circle class="map-city-visited" cx="400" cy="130" r="8" data-city="Budapest" title="布达佩斯"></circle>
+                    <circle class="map-city-visited" cx="420" cy="145" r="8" data-city="Prague" title="布拉格"></circle>
+                    <circle class="map-city-visited" cx="450" cy="135" r="8" data-city="Milan" title="米兰"></circle>
+                    <circle class="map-city-visited" cx="480" cy="150" r="8" data-city="Rome" title="罗马"></circle>
+                    <circle class="map-city-visited" cx="520" cy="120" r="8" data-city="Iceland" title="冰岛"></circle>
+                    <circle class="map-city-visited" cx="550" cy="100" r="8" data-city="Tromso" title="特罗姆瑟"></circle>
+                    <circle class="map-city-visited" cx="420" cy="160" r="8" data-city="Spain" title="西班牙"></circle>
+                    
+                    <!-- Cities - Wishlist (Red) -->
+                    <circle class="map-city-wishlist" cx="150" cy="180" r="8" data-city="NewYork" title="纽约"></circle>
+                    <circle class="map-city-wishlist" cx="420" cy="110" r="8" data-city="Paris" title="巴黎"></circle>
+                    <circle class="map-city-wishlist" cx="680" cy="120" r="8" data-city="Hokkaido" title="北海道"></circle>
+                    
+                    <!-- City Labels -->
+                    <text class="map-label" x="380" y="165">维也纳</text>
+                    <text class="map-label" x="400" y="155">布达佩斯</text>
+                    <text class="map-label" x="420" y="170">布拉格</text>
+                    <text class="map-label" x="450" y="160">米兰</text>
+                    <text class="map-label" x="480" y="175">罗马</text>
+                    <text class="map-label" x="520" y="145">冰岛</text>
+                    <text class="map-label" x="550" y="125">特罗姆瑟</text>
+                    <text class="map-label" x="420" y="185">西班牙</text>
+                    <text class="map-label" x="150" y="205">纽约</text>
+                    <text class="map-label" x="420" y="135">巴黎</text>
+                    <text class="map-label" x="680" y="145">北海道</text>
+                </svg>
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <div class="legend-dot legend-visited"></div>
+                    <span>已去过</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot legend-wishlist"></div>
+                    <span>想去</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Travel Stories List -->
+        <section style="margin: 4rem 0;">
+            <h2 style="font-size: 2rem; margin-bottom: 2rem;">旅行文章</h2>
+            <div class="grid">
+                <!-- Story 1 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80" alt="东欧三国游" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">匈牙利&奥地利&捷克</span>
+                        <h3 class="card-title">四个女仔自由行</h3>
+                        <p class="card-meta">2024-03-10 · 5 分钟阅读</p>
+                        <p class="card-description">维也纳的古典音乐、布达佩斯的温泉、布拉格的童话城堡。四个女生在东欧的冒险故事...</p>
+                        <a href="post/article.html?id=1" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80" alt="冰岛" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">冰岛</span>
+                        <h3 class="card-title">冰岛的极光与冰川</h3>
+                        <p class="card-meta">2024-03-05 · 7 分钟阅读</p>
+                        <p class="card-description">黑沙滩、冰川、极光。在冰岛的每一刻都像在另一个星球。这次旅行让我重新定义了美...</p>
+                        <a href="post/article.html?id=2" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="意大利" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">意大利</span>
+                        <h3 class="card-title">罗马的历史与浪漫</h3>
+                        <p class="card-meta">2024-02-28 · 6 分钟阅读</p>
+                        <p class="card-description">永恒之城罗马，每一条街道都是历史。漫步在古罗马遗迹中，感受千年的文明沉淀...</p>
+                        <a href="post/article.html?id=3" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+
+                <!-- Story 4 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=600&q=80" alt="西班牙" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">西班牙</span>
+                        <h3 class="card-title">巴塞罗那的艺术之旅</h3>
+                        <p class="card-meta">2024-02-20 · 5 分钟阅读</p>
+                        <p class="card-description">高迪的建筑、热情的人民和美味的美食。巴塞罗那是一个充满活力的城市...</p>
+                        <a href="post/article.html?id=4" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+
+                <!-- Story 5 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="北欧" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">挪威</span>
+                        <h3 class="card-title">特罗姆瑟的北极体验</h3>
+                        <p class="card-meta">2024-02-10 · 6 分钟阅读</p>
+                        <p class="card-description">北极光、雪橇犬、冰酒店。在地球最北端感受大自然的壮观...</p>
+                        <a href="post/article.html?id=5" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+
+                <!-- Story 6 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="米兰" class="card-image">
+                    <div class="card-content">
+                        <span class="card-tag">意大利</span>
+                        <h3 class="card-title">米兰的时尚与艺术</h3>
+                        <p class="card-meta">2024-02-01 · 5 分钟阅读</p>
+                        <p class="card-description">时尚之都米兰，每一个角落都散发着优雅。从大教堂到设计区...</p>
+                        <a href="post/article.html?id=6" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-input" id="search-input" placeholder="搜索文章、城市...">
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+                <p class="footer-copyright">&copy; 2024 rOamlOOm Travel Blog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
