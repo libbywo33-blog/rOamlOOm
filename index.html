@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Sidebar · Mini</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f5f1eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 迷你侧边卡片 — 最简点击版 */
+        .travel-mini-card {
+            width: 240px;
+            background: white;
+            border-radius: 24px;
+            padding: 20px 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eae2d7;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .card-header span {
+            font-size: 1.4rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #3a2e24;
+            letter-spacing: 0.3px;
+        }
+
+        .card-header .badge {
+            margin-left: auto;
+            background: #f0e9e0;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            color: #6b4f3a;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7a6a;
+            margin: 12px 0 6px 0;
+        }
+
+        .city-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .city-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            background: #faf8f5;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .city-item:hover {
+            background: #e7dfd5;
+            border-color: #c7b5a2;
+            transform: translateX(4px);
+        }
+
+        .city-item.visited {
+            border-left: 4px solid #4a7a9c;
+        }
+
+        .city-item.wishlist {
+            border-left: 4px solid #c45b5b;
+        }
+
+        .city-arrow {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: #b0a090;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .city-item:hover .city-arrow {
+            opacity: 1;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e5dcd2;
+            margin: 14px 0 8px 0;
+        }
+
+        .wishlist-note {
+            font-size: 0.7rem;
+            color: #9e8b7a;
+            margin-top: 12px;
+            text-align: right;
+            font-style: italic;
+        }
+
+        /* 模拟故事卡片区域（下方展示） */
+        .stories-preview {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .story-card {
+            width: 240px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .story-image {
+            height: 120px;
+            background: #d9cfc0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7b6b5a;
+            font-size: 0.8rem;
+        }
+
+        .story-content {
+            padding: 14px;
+        }
+
+        .story-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .story-meta {
+            font-size: 0.7rem;
+            color: #8f7e6e;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <!-- 最简点击卡片 —— 放在故事上方或侧边 -->
+        <div class="travel-mini-card">
+            <div class="card-header">
+                <span>✈️</span>
+                <h3>my footprint</h3>
+                <span class="badge">8+3</span>
+            </div>
+
+            <!-- visited section -->
+            <div class="section-title">📍 visited</div>
+            <div class="city-list">
+                <a href="#" class="city-item visited" onclick="alert('Vienna story →')">
+                    Vienna <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Budapest story →')">
+                    Budapest <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Prague story →')">
+                    Prague <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Milan story →')">
+                    Milan <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Rome story →')">
+                    Rome <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Iceland story →')">
+                    Iceland <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Tromsø story →')">
+                    Tromsø <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item visited" onclick="alert('Spain story →')">
+                    Spain <span class="city-arrow">↗</span>
+                </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- wishlist section -->
+            <div class="section-title">✨ wishlist</div>
+            <div class="city-list">
+                <a href="#" class="city-item wishlist" onclick="alert('New York stories (coming soon)')">
+                    New York <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item wishlist" onclick="alert('Paris stories (coming soon)')">
+                    Paris <span class="city-arrow">↗</span>
+                </a>
+                <a href="#" class="city-item wishlist" onclick="alert('Hokkaido stories (coming soon)')">
+                    Hokkaido <span class="city-arrow">↗</span>
+                </a>
+            </div>
+
+            <div class="wishlist-note">click any city → read story</div>
+        </div>
+
+        <!-- 下方故事卡片示例 (示意版面) -->
+        <div style="margin-top: 30px; text-align: center; color: #9b8a78; font-size: 0.8rem;">
+            ⬇️ stories below ⬇️
+        </div>
+        <div class="stories-preview">
+            <div class="story-card">
+                <div class="story-image">📷 Vienna</div>
+                <div class="story-content">
+                    <div class="story-title">Four girls in Vienna</div>
+                    <div class="story-meta">Mar 10 · 5 min</div>
+                </div>
+            </div>
+            <div class="story-card">
+                <div class="story-image">📷 Iceland</div>
+                <div class="story-content">
+                    <div class="story-title">Aurora & Glacier</div>
+                    <div class="story-meta">Mar 5 · 7 min</div>
+                </div>
+            </div>
+            <div class="story-card">
+                <div class="story-image">📷 Rome</div>
+                <div class="story-content">
+                    <div class="story-title">Eternal City</div>
+                    <div class="story-meta">Feb 28 · 6 min</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 说明：点击城市会弹出提示，实际使用时替换 onclick 为真实链接 -->
+    <script>
+        // 你可以把上面的 onclick 替换成真正的链接，例如：
+        // <a href="/story/vienna" class="city-item visited">Vienna <span class="city-arrow">↗</span></a>
+        // 或者用 data 属性 + 统一跳转
+    </script>
+</body>
+</html>
