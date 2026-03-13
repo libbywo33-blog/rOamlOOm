@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="漫游BLOG - liBBy wO - 探索世界，用眼睛和笔记录足迹">
+    <title>漫游BLOG · 可爱足迹</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #faf7f2;
+            --text-primary: #2c2c2c;
+            --text-secondary: #5e5e5e;
+            --accent-main: #8b6b4d;
+            --card-bg: #ffffff;
+            --map-bg: #f0ebe4;
+            --map-line: #b5926d;
+            --map-visited: #4a7a9c;
+            --map-wishlist: #c45b5b;
+            --map-water: #d9e6f2;
+            --footer-bg: #e8e2d8;
+            --border-light: #dcd7cd;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1e1e1e;
+            --text-primary: #eaeaea;
+            --text-secondary: #b0b0b0;
+            --accent-main: #b5926d;
+            --card-bg: #2a2a2a;
+            --map-bg: #2d2a26;
+            --map-line: #9b856b;
+            --map-visited: #6b9ec0;
+            --map-wishlist: #d47b7b;
+            --map-water: #1f3a45;
+            --footer-bg: #25221e;
+            --border-light: #3e3a34;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.2s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--accent-main);
+            font-family: 'Times New Roman', serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-main);
+            border-bottom-color: var(--accent-main);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--border-light);
+            color: var(--accent-main);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d4c9bc, #b7aa99);
+            color: #2a2a2a;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0 40px 40px;
+        }
+
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, #3a342e, #534b42);
+            color: #f0f0f0;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.85;
+        }
+
+        /* 可爱地图网格 */
+        .cute-map {
+            margin: 2rem 0 3rem;
+        }
+
+        .cute-map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .cute-map-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cute-map-title i {
+            color: var(--accent-main);
+        }
+
+        .cute-map-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .stat-badge {
+            background: var(--card-bg);
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid var(--border-light);
+        }
+
+        .stat-badge i {
+            margin-right: 4px;
+        }
+
+        .visited-icon {
+            color: var(--map-visited);
+        }
+
+        .wishlist-icon {
+            color: var(--map-wishlist);
+        }
+
+        /* 国家网格 */
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            background: var(--map-water);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* 国家卡片 */
+        .country-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .country-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .country-card.visited {
+            border-bottom: 3px solid var(--map-visited);
+        }
+
+        .country-card.wishlist {
+            border-bottom: 3px solid var(--map-wishlist);
+        }
+
+        /* 国家轮廓图标 - 用emoji和简单图形组合 */
+        .country-shape {
+            width: 60px;
+            height: 60px;
+            background: var(--map-bg);
+            border-radius: 30% 70% 50% 50% / 40% 40% 60% 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            border: 2px dashed var(--map-line);
+            color: var(--text-primary);
+        }
+
+        /* 不同国家不同形状 */
+        .country-shape.austria {
+            border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+            background: linear-gradient(145deg, #e8d9c5, #d4b89c);
+        }
+        .country-shape.hungary {
+            border-radius: 60% 40% 70% 30% / 40% 50% 50% 60%;
+            background: linear-gradient(145deg, #d4c4a8, #b8a07c);
+        }
+        .country-shape.czech {
+            border-radius: 45% 55% 35% 65% / 55% 45% 55% 45%;
+            background: linear-gradient(145deg, #d9cbad, #bda27e);
+        }
+        .country-shape.italy {
+            border-radius: 30% 70% 40% 60% / 60% 30% 70% 40%;
+            background: linear-gradient(145deg, #e6d4b5, #c4a882);
+        }
+        .country-shape.iceland {
+            border-radius: 80% 20% 70% 30% / 30% 80% 20% 70%;
+            background: linear-gradient(145deg, #d6e0e8, #aac0d0);
+        }
+        .country-shape.norway {
+            border-radius: 20% 80% 30% 70% / 80% 20% 80% 20%;
+            background: linear-gradient(145deg, #cbdbe8, #9fb8cc);
+        }
+        .country-shape.spain {
+            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
+            background: linear-gradient(145deg, #eddbb8, #ccb28b);
+        }
+        .country-shape.usa {
+            border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%;
+            background: linear-gradient(145deg, #e8dbc8, #cbb99b);
+        }
+        .country-shape.france {
+            border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
+            background: linear-gradient(145deg, #e9ddc2, #cab28d);
+        }
+        .country-shape.japan {
+            border-radius: 30% 70% 20% 80% / 70% 20% 80% 30%;
+            background: linear-gradient(145deg, #f0e1cb, #d4b792);
+        }
+
+        .country-name {
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .country-name small {
+            font-weight: normal;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .country-status {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+            margin-top: 5px;
+        }
+
+        .country-status.visited {
+            background: var(--map-visited);
+            color: white;
+            border: none;
+        }
+
+        .country-status.wishlist {
+            background: var(--map-wishlist);
+            color: white;
+            border: none;
+        }
+
+        /* 图例 */
+        .map-legend {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.visited {
+            background-color: var(--map-visited);
+        }
+
+        .legend-dot.wishlist {
+            background-color: var(--map-wishlist);
+        }
+
+        /* 故事部分 */
+        .section-title {
+            font-size: 2rem;
+            margin: 3rem 0 2rem;
+            text-align: center;
+            font-weight: 400;
+            border-bottom: 2px dashed var(--accent-main);
+            padding-bottom: 0.5rem;
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-tag {
+            background-color: var(--accent-main);
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .btn-read {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background-color: transparent;
+            border: 1.5px solid var(--accent-main);
+            color: var(--accent-main);
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-read:hover {
+            background-color: var(--accent-main);
+            color: white;
+        }
+
+        .newsletter {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .newsletter h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 450px;
+            margin: 0 auto;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form button {
+            padding: 0.8rem 1.8rem;
+            background: var(--accent-main);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: #9b7a5a;
+        }
+
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 1.2rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            z-index: 200;
+            border: 1px solid var(--border-light);
+        }
+
+        .search-modal.active {
+            display: block;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .search-results {
+            margin-top: 0.8rem;
+            max-height: 250px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            margin-top: 3rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 1.4rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-main);
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">rOamlOOm</div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="vlog.html">Vlog</a></li>
+                    <li><a href="sketch.html">Sketch</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-btn" id="search-toggle" title="搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn" id="theme-toggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>漫游BLOG</h1>
+            <p>"Every place has its beauty, if you are willing to see it"</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- 可爱国家网格 -->
+        <div class="cute-map">
+            <div class="cute-map-header">
+                <div class="cute-map-title">
+                    <i class="fas fa-globe-asia"></i> 我的足迹地图
+                </div>
+                <div class="cute-map-stats">
+                    <span class="stat-badge">
+                        <i class="fas fa-circle visited-icon"></i> 8 已去过
+                    </span>
+                    <span class="stat-badge">
+                        <i class="fas fa-circle wishlist-icon"></i> 3 想去
+                    </span>
+                </div>
+            </div>
+
+            <!-- 国家网格 - 每个国家都有独特轮廓 -->
+            <div class="country-grid">
+                <!-- 已去过国家 -->
+                <div class="country-card visited" data-country="Austria">
+                    <div class="country-shape austria">🇦🇹</div>
+                    <div class="country-name">Austria<br><small>维也纳</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Hungary">
+                    <div class="country-shape hungary">🇭🇺</div>
+                    <div class="country-name">Hungary<br><small>布达佩斯</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Czech">
+                    <div class="country-shape czech">🇨🇿</div>
+                    <div class="country-name">Czech<br><small>布拉格</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Italy">
+                    <div class="country-shape italy">🇮🇹</div>
+                    <div class="country-name">Italy<br><small>米兰/罗马</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Iceland">
+                    <div class="country-shape iceland">🇮🇸</div>
+                    <div class="country-name">Iceland<br><small>冰岛</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Norway">
+                    <div class="country-shape norway">🇳🇴</div>
+                    <div class="country-name">Norway<br><small>特罗姆瑟</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <div class="country-card visited" data-country="Spain">
+                    <div class="country-shape spain">🇪🇸</div>
+                    <div class="country-name">Spain<br><small>西班牙</small></div>
+                    <span class="country-status visited">✓ 去过</span>
+                </div>
+
+                <!-- 想去国家 -->
+                <div class="country-card wishlist" data-country="USA">
+                    <div class="country-shape usa">🇺🇸</div>
+                    <div class="country-name">USA<br><small>纽约</small></div>
+                    <span class="country-status wishlist">★ 想去</span>
+                </div>
+
+                <div class="country-card wishlist" data-country="France">
+                    <div class="country-shape france">🇫🇷</div>
+                    <div class="country-name">France<br><small>巴黎</small></div>
+                    <span class="country-status wishlist">★ 想去</span>
+                </div>
+
+                <div class="country-card wishlist" data-country="Japan">
+                    <div class="country-shape japan">🇯🇵</div>
+                    <div class="country-name">Japan<br><small>北海道</small></div>
+                    <span class="country-status wishlist">★ 想去</span>
+                </div>
+            </div>
+
+            <!-- 简单图例 -->
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-dot visited"></span>
+                    <span>已去过 (蓝色下划线)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot wishlist"></span>
+                    <span>想去 (红色下划线)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最新故事 -->
+        <h2 class="section-title">最新漫游故事</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80" alt="东欧三国游" class="card-image" loading="lazy">
+                <div class="card-content">
+                    <span class="card-tag">Austria · Hungary · Czech</span>
+                    <h3 class="card-title">四个女仔自由行</h3>
+                    <p class="card-meta">2024-03-10 · 5 min read</p>
+                    <p class="card-description">维也纳的古典音乐、布达佩斯的温泉、布拉格的童话城堡...</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80" alt="冰岛" class="card-image" loading="lazy">
+                <div class="card-content">
+                    <span class="card-tag">Iceland</span>
+                    <h3 class="card-title">冰岛的极光与冰川</h3>
+                    <p class="card-meta">2024-03-05 · 7 min read</p>
+                    <p class="card-description">黑沙滩、冰川、极光。在冰岛的每一刻都像在另一个星球...</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="意大利" class="card-image" loading="lazy">
+                <div class="card-content">
+                    <span class="card-tag">Italy</span>
+                    <h3 class="card-title">罗马的历史与浪漫</h3>
+                    <p class="card-meta">2024-02-28 · 6 min read</p>
+                    <p class="card-description">永恒之城罗马，每一条街道都是历史。漫步在古罗马遗迹中...</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 订阅通讯 -->
+        <section class="newsletter">
+            <h2>Subscribe Newsletter</h2>
+            <p>Get latest travel stories and photos</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- 搜索模态框 -->
+    <div class="search-modal" id="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-input" id="search-input" placeholder="Search cities or articles...">
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+                <p class="footer-copyright">&copy; 2024 rOamlOOm Travel Blog</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // 主题切换
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const moonIcon = themeToggle.querySelector('i');
+            
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                moonIcon.classList.remove('fa-moon');
+                moonIcon.classList.add('fa-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (body.hasAttribute('data-theme')) {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    moonIcon.classList.remove('fa-sun');
+                    moonIcon.classList.add('fa-moon');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    moonIcon.classList.remove('fa-moon');
+                    moonIcon.classList.add('fa-sun');
+                }
+            });
+
+            // 搜索模态框
+            const searchToggle = document.getElementById('search-toggle');
+            const searchModal = document.getElementById('search-modal');
+            const searchInput = document.getElementById('search-input');
+
+            searchToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                searchModal.classList.toggle('active');
+                if (searchModal.classList.contains('active')) {
+                    searchInput.focus();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchModal.contains(e.target) && e.target !== searchToggle && !searchToggle.contains(e.target)) {
+                    searchModal.classList.remove('active');
+                }
+            });
+
+            searchInput.addEventListener('input', function() {
+                const resultsDiv = document.getElementById('search-results');
+                const val = this.value.trim();
+                if (val === '') {
+                    resultsDiv.innerHTML = '';
+                } else {
+                    resultsDiv.innerHTML = `Found 0 articles about "${val}"`;
+                }
+            });
+
+            // 订阅表单
+            document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for subscribing!');
+                this.reset();
+            });
+
+            // 国家卡片点击
+            document.querySelectorAll('.country-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const country = card.getAttribute('data-country');
+                    const city = card.querySelector('.country-name small')?.textContent;
+                    alert(`${country} - ${city} — Stories coming soon`);
+                });
+            });
+
+            // 阅读全文按钮
+            document.querySelectorAll('.btn-read').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Article page under construction');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
