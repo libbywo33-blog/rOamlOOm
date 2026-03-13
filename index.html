@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="漫游BLOG - liBBy wO - 探索世界，用眼睛和笔记录足迹">
+    <title>漫游BLOG · 艺术线条地图</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #faf7f2;
+            --text-primary: #2c2c2c;
+            --text-secondary: #5e5e5e;
+            --accent-main: #8b6b4d;
+            --card-bg: #ffffff;
+            --map-bg: #f0ebe4;
+            --map-line: #b5926d;
+            --map-visited: #4a7a9c;
+            --map-wishlist: #c45b5b;
+            --map-water: #d9e6f2;
+            --footer-bg: #e8e2d8;
+            --border-light: #dcd7cd;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1e1e1e;
+            --text-primary: #eaeaea;
+            --text-secondary: #b0b0b0;
+            --accent-main: #b5926d;
+            --card-bg: #2a2a2a;
+            --map-bg: #2d2a26;
+            --map-line: #9b856b;
+            --map-visited: #6b9ec0;
+            --map-wishlist: #d47b7b;
+            --map-water: #1f3a45;
+            --footer-bg: #25221e;
+            --border-light: #3e3a34;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.2s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: var(--accent-main);
+            font-family: 'Times New Roman', serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-main);
+            border-bottom-color: var(--accent-main);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--border-light);
+            color: var(--accent-main);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d4c9bc, #b7aa99);
+            color: #2a2a2a;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0 40px 40px;
+        }
+
+        [data-theme="dark"] .hero {
+            background: linear-gradient(135deg, #3a342e, #534b42);
+            color: #f0f0f0;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            font-style: italic;
+            opacity: 0.85;
+        }
+
+        .map-container {
+            margin: 3rem 0;
+        }
+
+        .map-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            border-bottom: 2px dashed var(--accent-main);
+            padding-bottom: 0.5rem;
+            display: table;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 艺术线条地图容器 */
+        .art-map-wrapper {
+            background-color: var(--map-water);
+            border-radius: 32px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .art-map-canvas {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2 / 1; /* 保证宽高比2:1 */
+            background-color: var(--map-water);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        /* 纯CSS绘制的手绘风格地图 */
+        .handdrawn-map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        /* 线条容器 */
+        .map-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 手绘风格的线条 - 使用多个div模拟画笔效果 */
+        .line-segment {
+            position: absolute;
+            background-color: var(--map-line);
+            opacity: 0.4;
+            transform-origin: left center;
+            border-radius: 2px;
+        }
+
+        /* 大陆块 - 使用圆形和椭圆形模拟艺术感大陆 */
+        .continent {
+            position: absolute;
+            border: 2px dashed var(--map-line);
+            background: transparent;
+            opacity: 0.5;
+        }
+
+        .continent.rough {
+            border: 2px solid var(--map-line);
+            opacity: 0.15;
+            background: var(--map-line);
+        }
+
+        /* 标记点 */
+        .map-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .map-dot::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: currentColor;
+            opacity: 0.2;
+            transition: all 0.3s ease;
+        }
+
+        .map-dot:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+            z-index: 30;
+        }
+
+        .map-dot:hover::before {
+            width: 32px;
+            height: 32px;
+            opacity: 0.3;
+        }
+
+        .map-dot.visited {
+            background-color: var(--map-visited);
+            color: var(--map-visited);
+        }
+
+        .map-dot.wishlist {
+            background-color: var(--map-wishlist);
+            color: var(--map-wishlist);
+        }
+
+        /* 城市标签 */
+        .city-label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            color: var(--text-primary);
+            background: var(--card-bg);
+            padding: 4px 10px;
+            border-radius: 30px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            pointer-events: none;
+            z-index: 25;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .map-dot:hover + .city-label {
+            opacity: 1;
+        }
+
+        /* 旅行路线 */
+        .travel-path {
+            position: absolute;
+            border: 2px dashed var(--accent-main);
+            opacity: 0.4;
+            border-radius: 0;
+            transform-origin: left center;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            background: var(--card-bg);
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid var(--border-light);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .legend-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.visited-dot {
+            background-color: var(--map-visited);
+        }
+
+        .legend-dot.wishlist-dot {
+            background-color: var(--map-wishlist);
+        }
+
+        .legend-line {
+            width: 30px;
+            height: 2px;
+            background: transparent;
+            border-bottom: 2px dashed var(--accent-main);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 1.8rem 1.5rem 1.8rem;
+        }
+
+        .card-tag {
+            background-color: var(--accent-main);
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.4rem;
+            line-height: 1.5;
+        }
+
+        .btn-read {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            border: 1.5px solid var(--accent-main);
+            color: var(--accent-main);
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-read:hover {
+            background-color: var(--accent-main);
+            color: white;
+        }
+
+        .newsletter {
+            background: var(--card-bg);
+            border-radius: 40px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 0.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 1rem 2rem;
+            background: var(--accent-main);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background-color: #9b7a5a;
+            transform: scale(1.02);
+        }
+
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            background: var(--card-bg);
+            border-radius: 40px;
+            padding: 1.5rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            z-index: 200;
+            border: 1px solid var(--border-light);
+        }
+
+        .search-modal.active {
+            display: block;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-light);
+            border-radius: 60px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .search-results {
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            margin-top: 4rem;
+            padding: 2.5rem 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 1.6rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-main);
+            transform: translateY(-3px);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">rOamlOOm</div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="vlog.html">Vlog</a></li>
+                    <li><a href="sketch.html">Sketch</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-btn" id="search-toggle" title="搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn" id="theme-toggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>漫游BLOG</h1>
+            <p>"Every place has its beauty, if you are willing to see it"</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="map-container">
+            <h2 class="map-title">我的漫游足迹 · 手绘地图</h2>
+            
+            <!-- 艺术线条地图 - 纯代码实现，100%可靠 -->
+            <div class="art-map-wrapper">
+                <div class="art-map-canvas">
+                    <!-- 手绘风格的地图元素 - 全部用绝对定位实现 -->
+                    <div class="handdrawn-map">
+                        
+                        <!-- 艺术感大陆轮廓 - 使用圆形和椭圆形组合 -->
+                        
+                        <!-- 北美洲区域 -->
+                        <div class="continent rough" style="top: 18%; left: 12%; width: 18%; height: 14%; border-radius: 60% 40% 50% 30%; transform: rotate(-5deg);"></div>
+                        <div class="continent" style="top: 15%; left: 10%; width: 22%; height: 18%; border-radius: 70% 30% 60% 40%;"></div>
+                        
+                        <!-- 南美洲区域 -->
+                        <div class="continent rough" style="top: 40%; left: 18%; width: 10%; height: 22%; border-radius: 40% 60% 30% 70%; transform: rotate(8deg);"></div>
+                        <div class="continent" style="top: 38%; left: 16%; width: 14%; height: 26%; border-radius: 30% 70% 40% 60%;"></div>
+                        
+                        <!-- 欧洲区域 -->
+                        <div class="continent rough" style="top: 15%; left: 42%; width: 12%; height: 10%; border-radius: 50% 50% 40% 60%;"></div>
+                        <div class="continent" style="top: 12%; left: 40%; width: 16%; height: 14%; border-radius: 60% 40% 50% 50%;"></div>
+                        
+                        <!-- 非洲区域 -->
+                        <div class="continent rough" style="top: 30%; left: 44%; width: 12%; height: 18%; border-radius: 40% 60% 30% 70%; transform: rotate(10deg);"></div>
+                        <div class="continent" style="top: 28%; left: 42%; width: 16%; height: 22%; border-radius: 30% 70% 40% 60%;"></div>
+                        
+                        <!-- 亚洲区域 -->
+                        <div class="continent rough" style="top: 12%; left: 58%; width: 25%; height: 18%; border-radius: 50% 50% 40% 60%; transform: rotate(-5deg);"></div>
+                        <div class="continent" style="top: 8%; left: 55%; width: 30%; height: 22%; border-radius: 60% 40% 50% 50%;"></div>
+                        
+                        <!-- 澳大利亚区域 -->
+                        <div class="continent rough" style="top: 62%; left: 72%; width: 15%; height: 10%; border-radius: 50% 50% 40% 60%; transform: rotate(15deg);"></div>
+                        <div class="continent" style="top: 60%; left: 70%; width: 18%; height: 14%; border-radius: 40% 60% 30% 70%;"></div>
+                        
+                        <!-- 装饰性经纬线 - 手绘风格 -->
+                        <div class="line-segment" style="top: 0%; left: 0%; width: 100%; height: 2px; background: var(--map-line); opacity: 0.1; transform: translateY(25%);"></div>
+                        <div class="line-segment" style="top: 0%; left: 0%; width: 100%; height: 2px; background: var(--map-line); opacity: 0.1; transform: translateY(50%);"></div>
+                        <div class="line-segment" style="top: 0%; left: 0%; width: 100%; height: 2px; background: var(--map-line); opacity: 0.1; transform: translateY(75%);"></div>
+                        
+                        <div class="line-segment" style="top: 0%; left: 25%; width: 2px; height: 100%; background: var(--map-line); opacity: 0.1;"></div>
+                        <div class="line-segment" style="top: 0%; left: 50%; width: 2px; height: 100%; background: var(--map-line); opacity: 0.1;"></div>
+                        <div class="line-segment" style="top: 0%; left: 75%; width: 2px; height: 100%; background: var(--map-line); opacity: 0.1;"></div>
+                        
+                        <!-- 旅行路线 - 连接主要城市 -->
+                        <div class="travel-path" style="top: 22%; left: 43%; width: 15%; height: 0; border-bottom: 2px dashed var(--accent-main); transform: rotate(15deg);"></div>
+                        <div class="travel-path" style="top: 20%; left: 47%; width: 12%; height: 0; border-bottom: 2px dashed var(--accent-main); transform: rotate(-5deg);"></div>
+                        <div class="travel-path" style="top: 25%; left: 50%; width: 10%; height: 0; border-bottom: 2px dashed var(--accent-main); transform: rotate(25deg);"></div>
+                    </div>
+                    
+                    <!-- 城市标记点 - 已去过 -->
+                    <div class="map-dot visited" style="top: 22%; left: 44%;" data-city="维也纳"></div>
+                    <div class="city-label" style="top: 22%; left: 44%;">维也纳</div>
+                    
+                    <div class="map-dot visited" style="top: 23%; left: 46%;" data-city="布达佩斯"></div>
+                    <div class="city-label" style="top: 23%; left: 46%;">布达佩斯</div>
+                    
+                    <div class="map-dot visited" style="top: 21%; left: 48%;" data-city="布拉格"></div>
+                    <div class="city-label" style="top: 21%; left: 48%;">布拉格</div>
+                    
+                    <div class="map-dot visited" style="top: 20%; left: 51%;" data-city="米兰"></div>
+                    <div class="city-label" style="top: 20%; left: 51%;">米兰</div>
+                    
+                    <div class="map-dot visited" style="top: 24%; left: 53%;" data-city="罗马"></div>
+                    <div class="city-label" style="top: 24%; left: 53%;">罗马</div>
+                    
+                    <div class="map-dot visited" style="top: 10%; left: 62%;" data-city="冰岛"></div>
+                    <div class="city-label" style="top: 10%; left: 62%;">冰岛</div>
+                    
+                    <div class="map-dot visited" style="top: 7%; left: 67%;" data-city="特罗姆瑟"></div>
+                    <div class="city-label" style="top: 7%; left: 67%;">特罗姆瑟</div>
+                    
+                    <div class="map-dot visited" style="top: 27%; left: 47%;" data-city="西班牙"></div>
+                    <div class="city-label" style="top: 27%; left: 47%;">西班牙</div>
+                    
+                    <!-- 城市标记点 - 想去 -->
+                    <div class="map-dot wishlist" style="top: 28%; left: 23%;" data-city="纽约"></div>
+                    <div class="city-label" style="top: 28%; left: 23%;">纽约</div>
+                    
+                    <div class="map-dot wishlist" style="top: 17%; left: 45%;" data-city="巴黎"></div>
+                    <div class="city-label" style="top: 17%; left: 45%;">巴黎</div>
+                    
+                    <div class="map-dot wishlist" style="top: 14%; left: 78%;" data-city="北海道"></div>
+                    <div class="city-label" style="top: 14%; left: 78%;">北海道</div>
+                </div>
+                
+                <!-- 图例 -->
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot visited-dot"></span>
+                        <span>已去过 (8)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot wishlist-dot"></span>
+                        <span>想去 (3)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-line"></span>
+                        <span>旅行路线</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin: 4rem 0;">
+            <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">New Stories</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80" alt="东欧三国游" class="card-image" loading="lazy">
+                    <div class="card-content">
+                        <span class="card-tag">匈牙利&奥地利&捷克</span>
+                        <h3 class="card-title">四个女仔自由行</h3>
+                        <p class="card-meta">2024-03-10 · 5 分钟阅读</p>
+                        <p class="card-description">维也纳的古典音乐、布达佩斯的温泉、布拉格的童话城堡。四个女生在东欧的冒险故事...</p>
+                        <a href="post/article.html?id=1" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80" alt="冰岛" class="card-image" loading="lazy">
+                    <div class="card-content">
+                        <span class="card-tag">冰岛</span>
+                        <h3 class="card-title">冰岛的极光与冰川</h3>
+                        <p class="card-meta">2024-03-05 · 7 分钟阅读</p>
+                        <p class="card-description">黑沙滩、冰川、极光。在冰岛的每一刻都像在另一个星球。这次旅行让我重新定义了美...</p>
+                        <a href="post/article.html?id=2" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80" alt="意大利" class="card-image" loading="lazy">
+                    <div class="card-content">
+                        <span class="card-tag">意大利</span>
+                        <h3 class="card-title">罗马的历史与浪漫</h3>
+                        <p class="card-meta">2024-02-28 · 6 分钟阅读</p>
+                        <p class="card-description">永恒之城罗马，每一条街道都是历史。漫步在古罗马遗迹中，感受千年的文明沉淀...</p>
+                        <a href="post/article.html?id=3" class="btn-read">阅读全文</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <h2>订阅我的漫游通讯</h2>
+            <p>获取最新的旅行故事、摄影和旅行建议</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="输入你的邮箱" required>
+                <button type="submit">订阅</button>
+            </form>
+        </section>
+    </main>
+
+    <div class="search-modal" id="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-input" id="search-input" placeholder="搜索文章、城市...">
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+                <p class="footer-copyright">&copy; 2024 rOamlOOm Travel Blog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            // 主题切换
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const moonIcon = themeToggle.querySelector('i');
+            
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                moonIcon.classList.remove('fa-moon');
+                moonIcon.classList.add('fa-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (body.hasAttribute('data-theme')) {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    moonIcon.classList.remove('fa-sun');
+                    moonIcon.classList.add('fa-moon');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    moonIcon.classList.remove('fa-moon');
+                    moonIcon.classList.add('fa-sun');
+                }
+            });
+
+            // 搜索模态框
+            const searchToggle = document.getElementById('search-toggle');
+            const searchModal = document.getElementById('search-modal');
+            const searchInput = document.getElementById('search-input');
+
+            searchToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                searchModal.classList.toggle('active');
+                if (searchModal.classList.contains('active')) {
+                    searchInput.focus();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchModal.contains(e.target) && e.target !== searchToggle && !searchToggle.contains(e.target)) {
+                    searchModal.classList.remove('active');
+                }
+            });
+
+            searchInput.addEventListener('input', function() {
+                const resultsDiv = document.getElementById('search-results');
+                const val = this.value.trim();
+                if (val === '') {
+                    resultsDiv.innerHTML = '';
+                } else {
+                    resultsDiv.innerHTML = `找到 0 篇关于“${val}”的文章`;
+                }
+            });
+
+            // 订阅表单
+            document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('感谢订阅！');
+                this.reset();
+            });
+
+            // 地图标记点击
+            document.querySelectorAll('.map-dot').forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const city = dot.getAttribute('data-city');
+                    alert(`${city} — 游记准备中`);
+                });
+            });
+
+            // 阅读全文按钮
+            document.querySelectorAll('.btn-read').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('文章详情页开发中');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
