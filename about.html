@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="关于我 - 漫游BLOG">
+    <title>关于 - 漫游BLOG</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的 Logo 图片 URL -->
+                    <img src="images/about/logo.jpg"auto=format&fit=crop&w=100&q=80" alt="rOamlOOm Logo" style="height: 40px;">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                    <li><a href="vlog.html">Vlog</a></li>
+                    <li><a href="sketch.html">Sketch</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-btn" id="search-toggle" title="搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn" id="theme-toggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的个人头像 URL -->
+                    <img src="images/about/me.jpeg"auto=format&fit=crop&w=100&q=80" alt="个人头像" class="nav-avatar" title="个人头像">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+<section class="hero" style="background-image: url('images/about/about.jpg'); background-size: cover; background-position: center; min-height: 300px; position: relative;">
+    <div class="container" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2; width: 90%; max-width: 900px;">
+        <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 1.5rem; font-style: italic; background: rgba(0,0,0,0.3); padding: 18px 30px; border-radius: 50px; backdrop-filter: blur(3px); display: inline-block; white-space: nowrap;">
+            愿每一只不被束缚的猫，都能在风中收获全部的敬意与爱意
+        </p>
+    </div>
+</section>
+
+    <!-- Main Content -->
+    <main class="container-narrow">
+        <div style="margin: 3rem 0;">
+            <!-- About Section -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem;">
+                <div>
+                    <!-- 【替换说明】修改下方 src 为您的个人照片 URL -->
+                    <img src="images/about/protrail.jpg"?auto=format&fit=crop&w=600&q=80" alt="关于我" style="width: 100%; border-radius: 12px; box-shadow: var(--shadow-lg);">
+                </div>
+                <div>
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">你好，我是 liBBy</h2>
+                    <p style="margin-bottom: 1rem; line-height: 1.8; color: var(--text-secondary);">
+                        一个在束缚的社会里慢慢去学习的人。想不被一些网站消费而自己建立的一个小网站，绘画专业学代码新手。
+                    </p>
+                    <p style="margin-bottom: 1rem; line-height: 1.8; color: var(--text-secondary);">
+                        我创建这个博客是为了分享我在路上的经验，也是记录一些与朋友、自己看到的事物。我将用文字、照片、Vlog和绘画来提醒自己只要向前踏一步，看到的就是不一样的风景。
+                    </p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#contact" class="btn-read">联系我</a>
+                        <a href="stories.html" class="btn-read" style="background: var(--accent-alt);">查看故事</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Contact Section -->
+            <section id="contact" style="margin: 4rem 0; padding: 2rem; background: var(--bg-secondary); border-radius: 12px; box-shadow: var(--shadow-md);">
+                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">联系我</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-envelope" style="font-size: 2rem; color: var(--accent-main); margin-bottom: 1rem;"></i>
+                        <h3 style="margin-bottom: 0.5rem;">邮箱</h3>
+                        <p><a href="libbyhu@126.com" style="color: var(--accent-main); text-decoration: none;">libbyhu@126.com</a></p>
+                    </div>
+
+                <!-- Contact Form -->
+                <form style="max-width: 600px; margin: 0 auto;">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">姓名</label>
+                        <input type="text" placeholder="您的姓名" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-family: inherit;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">邮箱</label>
+                        <input type="email" placeholder="您的邮箱" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-family: inherit;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">消息</label>
+                        <textarea placeholder="您的消息..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-family: inherit; min-height: 120px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn-read" style="width: 100%;">发送消息</button>
+                </form>
+            </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 rOamlOOm 漫游BLOG. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
