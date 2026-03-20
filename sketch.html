@@ -1,37 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-    <style>
-    /* 可爱导航字体 - 无下划线 */
-    .nav-menu {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-        margin: 0;
-        padding: 0;
+<style>
+    /* ===== 网页端导航 (正常大小) ===== */
+    @media (min-width: 769px) {
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
+            font-size: 1.3rem;  /* 网页端正常大小 */
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            transition: all 0.2s ease;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--accent-main);
+            background: rgba(163, 177, 138, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Logo 和头像网页端正常大小 */
+        .logo img {
+            height: 40px;
+        }
+        
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .nav-btn {
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+        }
     }
     
-    .nav-menu a {
-        font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: var(--text-primary);
-        text-decoration: none;  /* 去掉下划线 */
-        padding: 0.5rem 0.8rem;
-        transition: all 0.2s ease;
-        border-radius: 30px;
-        display: inline-block;
-    }
-    
-    .nav-menu a:hover {
-        color: var(--accent-main);
-        background: rgba(163, 177, 138, 0.1);
-        transform: translateY(-2px);
-    }
-    
-    /* 手机端完美适配 */
+    /* ===== 手机端导航 (紧凑版) ===== */
     @media (max-width: 768px) {
-        /* 导航整体布局 */
         nav {
             display: flex;
             flex-wrap: wrap;
@@ -63,7 +80,7 @@
             height: 36px !important;
         }
         
-        /* 导航菜单 - 放在第二行，居中显示 */
+        /* 导航菜单 - 放在第二行 */
         .nav-menu {
             display: flex !important;
             flex-direction: row !important;
@@ -82,12 +99,15 @@
         }
         
         .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', cursive, sans-serif;
             font-size: 1rem !important;
             padding: 6px 15px !important;
             white-space: nowrap;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
+            text-decoration: none;
+            border-radius: 30px;
         }
         
         .nav-menu a:hover {
