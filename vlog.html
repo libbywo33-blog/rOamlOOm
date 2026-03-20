@@ -1,5 +1,147 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+    <style>
+    /* 可爱导航字体 - 无下划线 */
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nav-menu a {
+        font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-decoration: none;  /* 去掉下划线 */
+        padding: 0.5rem 0.8rem;
+        transition: all 0.2s ease;
+        border-radius: 30px;
+        display: inline-block;
+    }
+    
+    .nav-menu a:hover {
+        color: var(--accent-main);
+        background: rgba(163, 177, 138, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    /* 手机端完美适配 */
+    @media (max-width: 768px) {
+        /* 导航整体布局 */
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        /* Logo 和头像缩小 */
+        .logo img {
+            height: 32px !important;
+        }
+        
+        .nav-avatar {
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        /* 按钮组 */
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            order: 2;
+        }
+        
+        .nav-btn {
+            font-size: 1.1rem !important;
+            width: 36px !important;
+            height: 36px !important;
+        }
+        
+        /* 导航菜单 - 放在第二行，居中显示 */
+        .nav-menu {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            width: 100%;
+            order: 3;
+            margin-top: 12px;
+            padding: 5px 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 !important;
+        }
+        
+        .nav-menu a {
+            font-size: 1rem !important;
+            padding: 6px 15px !important;
+            white-space: nowrap;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .nav-menu a:hover {
+            background: var(--accent-main);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero 调整 */
+        .hero {
+            min-height: 250px !important;
+            margin-top: 10px;
+        }
+        
+        .hero p {
+            font-size: 1rem !important;
+            padding: 12px 20px !important;
+            white-space: normal !important;
+            width: 95% !important;
+        }
+    }
+    
+    /* 更小屏幕 */
+    @media (max-width: 480px) {
+        .nav-menu a {
+            font-size: 0.9rem !important;
+            padding: 5px 12px !important;
+        }
+        
+        .logo img {
+            height: 28px !important;
+        }
+        
+        .nav-avatar {
+            width: 28px !important;
+            height: 28px !important;
+        }
+        
+        .nav-btn {
+            font-size: 1rem !important;
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        .hero {
+            min-height: 220px !important;
+        }
+        
+        .hero p {
+            font-size: 0.9rem !important;
+            padding: 10px 15px !important;
+        }
+    }
+</style>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
