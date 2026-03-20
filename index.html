@@ -1,5 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+    <style>
+    /* 强制移动端样式 */
+    @media (max-width: 768px) {
+        .footprints-section {
+            display: block !important;
+        }
+        
+        .footprints-list {
+            position: static !important;
+            width: 100% !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .footprints-category ul {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+        }
+        
+        .footprints-category li {
+            margin-bottom: 0 !important;
+        }
+        
+        .footprints-category a {
+            display: inline-block !important;
+            background: var(--bg-secondary) !important;
+            padding: 8px 16px !important;
+            border-radius: 30px !important;
+            border: 1px solid var(--border-color) !important;
+        }
+        
+        .hero p {
+            white-space: normal !important;
+            font-size: 1.2rem !important;
+            padding: 15px 20px !important;
+            max-width: 95% !important;
+        }
+        
+        .card-image {
+            height: 250px !important;
+        }
+    }
+</style>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
