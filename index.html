@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-    <style>
-    /* 强制移动端样式 */
+<style>
     @media (max-width: 768px) {
-        .footprints-section {
-            display: block !important;
+        nav {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
         }
         
-        .footprints-list {
-            position: static !important;
-            width: 100% !important;
-            margin-bottom: 20px !important;
+        .logo img {
+            height: 28px !important;
         }
         
-        .footprints-category ul {
+        .nav-avatar {
+            width: 28px !important;
+            height: 28px !important;
+        }
+        
+        .nav-menu {
             display: flex !important;
-            flex-wrap: wrap !important;
-            gap: 10px !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            width: 100%;
+            padding: 5px 0;
         }
         
-        .footprints-category li {
-            margin-bottom: 0 !important;
+        .nav-menu a {
+            font-size: 0.85rem !important;
+            padding: 4px 6px !important;
         }
         
-        .footprints-category a {
-            display: inline-block !important;
-            background: var(--bg-secondary) !important;
-            padding: 8px 16px !important;
-            border-radius: 30px !important;
-            border: 1px solid var(--border-color) !important;
+        .hero {
+            min-height: 220px !important;
         }
         
         .hero p {
-            white-space: normal !important;
-            font-size: 1.2rem !important;
-            padding: 15px 20px !important;
-            max-width: 95% !important;
-        }
-        
-        .card-image {
-            height: 250px !important;
+            font-size: 0.9rem !important;
+            padding: 10px 15px !important;
         }
     }
 </style>
