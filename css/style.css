@@ -759,7 +759,15 @@ footer {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+      .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+  }
+}
     .nav-menu {
         display: none;
     }
