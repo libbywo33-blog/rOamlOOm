@@ -769,9 +769,21 @@ footer {
   }
 }
     .nav-menu {
-        display: none;
+        display: flex;  /* 改成 flex，让菜单显示 */
+        flex-wrap: wrap;  /* 允许换行 */
+        justify-content: center;  /* 居中 */
+        gap: 0.8rem;  /* 减小间距 */
     }
-
+    
+    .nav-menu li {
+        margin: 0;
+    }
+    
+    .nav-menu a {
+        font-size: 0.9rem;  /* 字体小一点 */
+        padding: 0.3rem 0;  /* 减少内边距 */
+    }
+}
     .hero h1 {
         font-size: 1.5rem;
     }
