@@ -2,44 +2,30 @@
 <html lang="zh-CN">
 
 <style>
-    @media (max-width: 768px) {
-        nav {
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .logo img {
-            height: 28px !important;
-        }
-        
-        .nav-avatar {
-            width: 28px !important;
-            height: 28px !important;
-        }
-        
-        .nav-menu {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: center !important;
-            gap: 8px !important;
-            width: 100%;
-            padding: 5px 0;
-        }
-        
-        .nav-menu a {
-            font-size: 0.85rem !important;
-            padding: 4px 6px !important;
-        }
-        
-        .hero {
-            min-height: 220px !important;
-        }
-        
-        .hero p {
-            font-size: 0.9rem !important;
-            padding: 10px 15px !important;
-        }
+    .nav-menu a {
+        position: relative;
+        padding-left: 0;
+        transition: padding-left 0.3s ease;
+    }
+    
+    .nav-menu a::before {
+        content: '·';
+        position: absolute;
+        left: -10px;
+        opacity: 0;
+        color: var(--accent-main);
+        font-size: 1.5rem;
+        line-height: 1;
+        transition: opacity 0.3s ease, left 0.3s ease;
+    }
+    
+    .nav-menu a:hover {
+        padding-left: 15px;
+    }
+    
+    .nav-menu a:hover::before {
+        opacity: 1;
+        left: 0;
     }
 </style>
     
