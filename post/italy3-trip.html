@@ -136,6 +136,12 @@
             font-size: 0.9rem !important;
             padding: 5px 12px !important;
         }
+        /* ===== 手机端隐藏左侧目录 ===== */
+    @media (max-width: 768px) {
+        .article-toc {
+            display: none !important;
+        }
+    }
         
         .logo img {
             height: 28px !important;
@@ -161,6 +167,127 @@
             padding: 10px 15px !important;
         }
     }
+        /* ===== 电脑端：目录和文章并排 ===== */
+@media (min-width: 769px) {
+    .article-layout {
+        display: flex;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+    
+    .article-toc {
+        flex: 0 0 240px;
+        position: sticky;
+        top: 2rem;
+        align-self: start;
+    }
+    
+    .article-content {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* ===== 手机端：隐藏原有目录，显示浮窗按钮 ===== */
+/* 让所有文章图片自适应手机屏幕 */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
+/* 确保文章容器不溢出 */
+.article-content {
+    overflow-x: hidden;
+}
+
+/* ===== 手机浮窗目录样式 ===== */
+.mobile-toc-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #a3b18a;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-toc-panel {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 260px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    padding: 1rem;
+    z-index: 1001;
+    display: none;
+    border: 1px solid #e0e0e0;
+}
+
+.mobile-toc-panel.show {
+    display: block;
+}
+
+.mobile-toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#close-toc-panel {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+#mobile-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mobile-toc-list li {
+    margin: 0;
+    padding: 0;
+}
+
+#mobile-toc-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+#mobile-toc-list a:hover {
+    color: #a3b18a;
+}
+
+/* 手机端显示浮窗按钮 */
+@media (max-width: 768px) {
+    .mobile-toc-btn {
+        display: flex;
+    }
+}
+
 </style>
     
 <head>
@@ -684,10 +811,6 @@
           <img src="../images/italy3/image168.jpg" alt="意大利" width="800">
             <p>行程整体费用明细，记得是相当细节了。整体比第一次去花费大了不少。这明细不含购物、手信。</p>
 
-
-
-
-
             <!-- Share -->
             <div style="text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
                 <p style="margin-bottom: 1rem; color: var(--text-secondary);">分享这个故事</p>
@@ -765,33 +888,91 @@
         </div>
     </footer>
 
+            <!-- 手机端浮窗目录按钮 -->
+    <button class="mobile-toc-btn" id="mobile-toc-btn">
+        📖 目录
+    </button>
+
+    <!-- 手机端浮窗目录面板 -->
+    <div class="mobile-toc-panel" id="mobile-toc-panel">
+        <div class="mobile-toc-header">
+            <span>📌 目录</span>
+            <button id="close-toc-panel">✕</button>
+        </div>
+        <ul id="mobile-toc-list"></ul>
+    </div>
+
     <script src="../js/main.js"></script>
 
 <script>
+// 第一步：为所有 h2 添加 id
 const headings = document.querySelectorAll('.article-content h2');
-
 headings.forEach((h2, index) => {
-  if (!h2.id) {
-    h2.id = 'section-' + index;
-  }
+    if (!h2.id) {
+        h2.id = 'section-' + index;
+    }
 });
-</script>
 
-<script>
+// 第二步：生成电脑端目录
 const toc = document.getElementById('toc');
-const h2s = document.querySelectorAll('.article-content h2');
+if (toc) {
+    const h2s = document.querySelectorAll('.article-content h2');
+    h2s.forEach(h2 => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.textContent = h2.textContent;
+        a.href = '#' + h2.id;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+}
 
-h2s.forEach(h2 => {
-  const li = document.createElement('li');
-  const a = document.createElement('a');
-
-  a.textContent = h2.textContent;
-  a.href = '#' + h2.id;
-
-  li.appendChild(a);
-  toc.appendChild(li);
-});
+// 第三步：手机端浮窗目录功能
+(function() {
+    // 生成手机端目录列表
+    const mobileTocList = document.getElementById('mobile-toc-list');
+    if (mobileTocList) {
+        const h2s = document.querySelectorAll('.article-content h2');
+        h2s.forEach(h2 => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.textContent = h2.textContent;
+            a.href = '#' + h2.id;
+            li.appendChild(a);
+            mobileTocList.appendChild(li);
+        });
+    }
+    
+    // 打开/关闭浮窗目录
+    const tocBtn = document.getElementById('mobile-toc-btn');
+    const tocPanel = document.getElementById('mobile-toc-panel');
+    const closeBtn = document.getElementById('close-toc-panel');
+    
+    if (tocBtn && tocPanel) {
+        tocBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            tocPanel.classList.toggle('show');
+            console.log('按钮被点击了');  // 调试用
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                tocPanel.classList.remove('show');
+            });
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (tocPanel && tocBtn) {
+                if (!tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
+                    tocPanel.classList.remove('show');
+                }
+            }
+        });
+    } else {
+        console.log('未找到按钮或面板元素');
+    }
+})();
 </script>
-
+    
 </body>
 </html>
