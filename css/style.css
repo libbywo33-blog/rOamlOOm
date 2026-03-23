@@ -760,9 +760,10 @@ footer {
 }
 
 @media (max-width: 768px) {
-      .grid {
-    grid-template-columns: 1fr;
-  }
+    .gallery-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.8rem;
+    }
 
   .nav-menu {
     flex-direction: column;
