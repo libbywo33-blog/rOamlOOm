@@ -161,6 +161,120 @@
             padding: 10px 15px !important;
         }
     }
+        /* ===== 电脑端：目录和文章并排 ===== */
+@media (min-width: 769px) {
+    .article-layout {
+        display: flex;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+    
+    .article-toc {
+        flex: 0 0 240px;
+        position: sticky;
+        top: 2rem;
+        align-self: start;
+    }
+    
+    .article-content {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* ===== 手机端：隐藏原有目录，显示浮窗按钮 ===== */
+@media (max-width: 768px) {
+    .article-toc {
+        display: none !important;
+    }
+}
+
+/* ===== 手机浮窗目录样式 ===== */
+.mobile-toc-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #a3b18a;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-toc-panel {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 260px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    padding: 1rem;
+    z-index: 1001;
+    display: none;
+    border: 1px solid #e0e0e0;
+}
+
+.mobile-toc-panel.show {
+    display: block;
+}
+
+.mobile-toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#close-toc-panel {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+#mobile-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mobile-toc-list li {
+    margin: 0;
+    padding: 0;
+}
+
+#mobile-toc-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+#mobile-toc-list a:hover {
+    color: #a3b18a;
+}
+
+/* 手机端显示浮窗按钮 */
+@media (max-width: 768px) {
+    .mobile-toc-btn {
+        display: flex;
+    }
+}
+
 </style>
     
 <head>
@@ -576,7 +690,61 @@ h2s.forEach(h2 => {
   li.appendChild(a);
   toc.appendChild(li);
 });
+    // ===== 手机端浮窗目录功能 =====
+(function() {
+    // 生成手机端目录列表
+    const mobileTocList = document.getElementById('mobile-toc-list');
+    if (mobileTocList) {
+        const headings = document.querySelectorAll('.article-content h2');
+        headings.forEach(h2 => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.textContent = h2.textContent;
+            a.href = '#' + h2.id;
+            li.appendChild(a);
+            mobileTocList.appendChild(li);
+        });
+    }
+    
+    // 打开/关闭浮窗目录
+    const tocBtn = document.getElementById('mobile-toc-btn');
+    const tocPanel = document.getElementById('mobile-toc-panel');
+    const closeBtn = document.getElementById('close-toc-panel');
+    
+    if (tocBtn && tocPanel) {
+        tocBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            tocPanel.classList.toggle('show');
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                tocPanel.classList.remove('show');
+            });
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (!tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
+                tocPanel.classList.remove('show');
+            }
+        });
+    }
+})();
 </script>
 
+        <!-- 手机端浮窗目录按钮 -->
+    <button class="mobile-toc-btn" id="mobile-toc-btn">
+        📖 目录
+    </button>
+
+    <!-- 手机端浮窗目录面板 -->
+    <div class="mobile-toc-panel" id="mobile-toc-panel">
+        <div class="mobile-toc-header">
+            <span>📌 目录</span>
+            <button id="close-toc-panel">✕</button>
+        </div>
+        <ul id="mobile-toc-list"></ul>
+    </div>
+    
 </body>
 </html>
