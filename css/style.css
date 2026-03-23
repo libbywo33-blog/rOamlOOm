@@ -20,9 +20,6 @@
     --border-color: #2d3748;
     --accent-main: #84a59d;
     --accent-alt: #c9a87c;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -104,11 +101,6 @@ nav {
     object-fit: cover;
     border: 2px solid var(--accent-main);
     cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.nav-avatar:hover {
-    transform: scale(1.1);
 }
 
 .nav-btn {
@@ -117,7 +109,6 @@ nav {
     color: var(--text-primary);
     font-size: 1.2rem;
     cursor: pointer;
-    transition: color 0.3s ease;
 }
 
 .nav-btn:hover {
@@ -383,11 +374,6 @@ nav {
     font-size: 1.2rem;
     cursor: pointer;
     color: var(--text-secondary);
-    transition: color 0.2s;
-}
-
-.toc-mobile-close:hover {
-    color: var(--text-primary);
 }
 
 .toc-mobile-panel ul {
@@ -471,7 +457,6 @@ nav {
     border-radius: 40px;
     cursor: pointer;
     margin-top: 0.5rem;
-    transition: background 0.2s;
 }
 
 .btn-submit-comment:hover {
