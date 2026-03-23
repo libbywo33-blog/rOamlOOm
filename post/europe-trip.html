@@ -183,10 +183,17 @@
 }
 
 /* ===== 手机端：隐藏原有目录，显示浮窗按钮 ===== */
-@media (max-width: 768px) {
-    .article-toc {
-        display: none !important;
-    }
+/* 让所有文章图片自适应手机屏幕 */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
+/* 确保文章容器不溢出 */
+.article-content {
+    overflow-x: hidden;
 }
 
 /* ===== 手机浮窗目录样式 ===== */
