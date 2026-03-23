@@ -377,8 +377,8 @@ nav {
 /* Gallery */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(4, 1fr);  /* 固定一行4列 */
+    gap: 1rem;
     margin: 2rem 0;
 }
 
