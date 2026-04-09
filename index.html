@@ -161,13 +161,165 @@
             padding: 10px 15px !important;
         }
     }
+
+    /* ===== 新增：图片网格自适应样式（只改这里，其余不变）===== */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+        aspect-ratio: 1 / 1;
+        background-color: #e9ecef;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .image-caption-corner {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    /* 手机端图片网格紧凑排列 */
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+        .image-caption-corner {
+            font-size: 0.6rem;
+            padding: 3px 6px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+        }
+        .image-caption-corner {
+            font-size: 0.55rem;
+            padding: 2px 5px;
+        }
+    }
+
+    /* 确保container和原有样式不冲突 */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* 修复lightbox可能的问题 */
+    .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+    .lightbox.active {
+        display: flex;
+    }
+    .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+    }
+    .lightbox-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        font-size: 2rem;
+        padding: 1rem;
+        cursor: pointer;
+    }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    /* 搜索模态框 */
+    .search-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+    }
+    .search-modal.active {
+        display: flex;
+    }
+    .search-modal-content {
+        background: var(--bg-secondary);
+        padding: 2rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+    }
+    .search-input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+    }
 </style>
     
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="漫游BLOG - 旅行故事和足迹">
-    <title>Home - 漫游BLOG</title>
+    <meta name="description" content="旅行摄影 - 漫游BLOG">
+    <title>摄影 - 漫游BLOG</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -176,12 +328,9 @@
     <header>
         <div class="container">
             <nav>
-                <!-- Logo with Image -->
                 <div class="logo">
-                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的 Logo 图片 URL -->
-                    <img src="images/about/logo.jpg"auto=format&fit=crop&w=100&q=80" alt="rOamlOOm Logo" style="height: 40px;">
+                    <img src="images/about/logo.jpg" alt="rOamlOOm Logo" style="height: 40px;">
                 </div>
-
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="stories.html">Stories</a></li>
@@ -189,7 +338,6 @@
                     <li><a href="sketch.html">Sketch</a></li>
                     <li><a href="about.html">About</a></li>
                 </ul>
-
                 <div class="nav-actions">
                     <button class="nav-btn" id="search-toggle" title="搜索">
                         <i class="fas fa-search"></i>
@@ -197,102 +345,97 @@
                     <button class="nav-btn" id="theme-toggle" title="切换主题">
                         <i class="fas fa-moon"></i>
                     </button>
-                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的个人头像 URL -->
-                    <img src="images/about/me.jpeg"auto=format&fit=crop&w=100&q=80" alt="个人头像" class="nav-avatar" title="个人头像">
+                    <img src="images/about/me.jpeg" alt="个人头像" class="nav-avatar" title="个人头像">
                 </div>
             </nav>
         </div>
     </header>
 
     <!-- Hero -->
-    
-<section class="hero" style="background-image: url('images/about/index.jpg'); background-size: cover; background-position: center; min-height: 300px; position: relative;">
-    <div class="container" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2; width: 90%; max-width: 900px;">
-        <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 1.5rem; font-style: italic; background: rgba(0,0,0,0.3); padding: 18px 30px; border-radius: 50px; backdrop-filter: blur(3px); display: inline-block; white-space: nowrap;">
-            愿每一只不被束缚的猫，都能在风中收获全部的敬意与爱意
-        </p>
-    </div>
-</section>
+    <section class="hero" style="background-image: url('images/about/sketch.jpg'); background-size: cover; background-position: center; min-height: 300px; position: relative;">
+        <div class="container" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2; width: 90%; max-width: 900px;">
+            <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 1.5rem; font-style: italic; background: rgba(0,0,0,0.3); padding: 18px 30px; border-radius: 50px; backdrop-filter: blur(3px); display: inline-block; white-space: nowrap;">
+                愿每一只不被束缚的猫，都能在风中收获全部的敬意与爱意
+            </p>
+        </div>
+    </section>
 
-    <!-- Main Content -->
+    <!-- Gallery -->
     <main class="container">
-        <!-- Footprints & Stories Section -->
-        <section class="footprints-section">
-            <!-- Left: Footprints List -->
-            <aside class="footprints-list">
-                <h3>我的足迹</h3>
-                
-                <div class="footprints-category">
-                    <h4>已去过的地方</h4>
-                    <ul>
-                        <li><a href="stories.html#vienna">匈牙利</a></li>
-                        <li><a href="stories.html#budapest">维也纳</a></li>
-                        <li><a href="stories.html#prague">捷克</a></li>
-                        <li><a href="stories.html#milan">意大利</a></li>
-                        <li><a href="stories.html#rome">挪威</a></li>
-                        <li><a href="stories.html#iceland">冰岛</a></li>
-                        <li><a href="stories.html#tromso">丹麦</a></li>
-                        <li><a href="stories.html#spain">西班牙</a></li>
-                    </ul>
-                </div>
-
-                <div class="footprints-category">
-                    <h4>想去的地方</h4>
-                    <ul>
-                        <li><a href="stories.html#newyork">Wishlist · 纽约</a></li>
-                        <li><a href="stories.html#newyork">Wishlist ·巴黎</a></li>
-                        <li><a href="stories.html#newyork">Wishlist ·北海道</a></li>
-                    </ul>
-                </div>
-            </aside>
-
-            <!-- Right: Latest Stories -->
-            <div class="stories-preview">
-                <h2 style="margin-bottom: 1.5rem;">最新故事</h2>
-                
-                <div class="card">
-                    <!-- 【替换说明】修改下方 src 为您的文章封面图片 URL -->
-                    <img src="images/easterneurope-trip/1trip/imagie66.jpg"alt="匈牙利 & 奥地利 & 捷克" class="card-image">
-                    <div class="card-content">
-                        <span class="card-tag">四个女仔一个流浪汉十五日三国八城东欧自由行</span>
-                        <h3 class="card-title">匈牙利 & 奥地利 & 捷克</h3>
-                        <p class="card-meta">旅行时间2018年2月 </p>
-                        <p class="card-description">第三次进入欧洲 ，选择去的地方其实也是因为被网上无止境po烂的图才动心行动起来的。</p>
-                        <a href="post/europe-trip.html" class="btn-read">阅读更多</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <!-- 【替换说明】修改下方 src 为您的文章封面图片 URL -->
-                    <img src="images/italy3/images.jpg"auto=format&fit=crop&w=600&q=80" alt="意大利" class="card-image">
-                    <div class="card-content">
-                        <span class="card-tag">四个女仔与一个打酱油的12日南意罗马、西西里随心探秘自驾之旅</span>
-                        <h3 class="card-title">三游意大利</h3>
-                        <p class="card-meta">旅行时间2025年2月</p>
-                        <p class="card-description">今次是第三次踏入 意大利 啦，也是刚好每次隔五年一次。也是真巧。</p>
-                        <a href="post/italy3-trip.html" class="btn-read">阅读更多</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <!-- 【替换说明】修改下方 src 为您的文章封面图片 URL -->
-                    <img src="images/norway2/images.jpg"auto=format&fit=crop&w=600&q=80" alt="挪威" class="card-image">
-                    <div class="card-content">
-                        <span class="card-tag">北欧三国五个女仔13日半自驾自由行</span>
-                        <h3 class="card-title">再战北极圈赴十年之约</h3>
-                        <p class="card-meta">旅行时间2024年2月</p>
-                        <p class="card-description">上次出国是刚疫情发生的20年1月，现在已经是后疫情时代。想想真的经过了很多事，也理解到命运的不稳定性。所以及时行乐真的很重要。</p>
-                        <a href="post/norway2-trip.html" class="btn-read">阅读更多</a>
-                    </div>
-                </div>
-
-        </section>
+        <div class="gallery-grid">
+            <div class="gallery-item" onclick="openLightbox(0)">
+                <img src="images/sketch/2013年马来西亚仙本拿.JPG" alt="2013年马来西亚仙本那">
+                <div class="image-caption-corner">2013年马来西亚仙本那</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(1)">
+                <img src="images/sketch/2013年越南会安.JPG" alt="2013年越南会安">
+                <div class="image-caption-corner">2013年越南会安</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(2)">
+                <img src="images/sketch/2014年日本关西.JPG" alt="2014年日本关西">
+                <div class="image-caption-corner">2014年日本关西</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(3)">
+                <img src="images/sketch/2015年冬天的台湾清境农场.JPG" alt="2015年冬天的台湾清境农场">
+                <div class="image-caption-corner">2015年冬天的台湾清境农场</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(4)">
+                <img src="images/sketch/2015年柬埔寨01.JPG" alt="2015年柬埔寨">
+                <div class="image-caption-corner">2015年柬埔寨</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(5)">
+                <img src="images/sketch/2015年柬埔寨02.JPG" alt="2015年柬埔寨">
+                <div class="image-caption-corner">2015年柬埔寨</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(6)">
+                <img src="images/sketch/2016年日本关西红叶.JPG" alt="2016年日本关西红叶">
+                <div class="image-caption-corner">2016年日本关西红叶</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(7)">
+                <img src="images/sketch/2017冰岛钻石沙滩.JPG" alt="2017冰岛钻石沙滩">
+                <div class="image-caption-corner">2017冰岛钻石沙滩</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(8)">
+                <img src="images/sketch/2017年的冰岛上极光.JPG" alt="2017年的冰岛上极光">
+                <div class="image-caption-corner">2017年的冰岛上极光</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(9)">
+                <img src="images/sketch/2017年挪威Flam.jpg" alt="2017年挪威Flam">
+                <div class="image-caption-corner">2017年挪威Flam</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(10)">
+                <img src="images/sketch/2018年匈牙利布达佩斯.jpg" alt="2018年匈牙利布达佩斯">
+                <div class="image-caption-corner">2018年匈牙利布达佩斯</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(11)">
+                <img src="images/sketch/2020年意大利巴里.jpg" alt="2020年意大利巴里">
+                <div class="image-caption-corner">2020年意大利巴里</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(12)">
+                <img src="images/sketch/2020年意大利马泰拉.jpg" alt="2020年意大利马泰拉">
+                <div class="image-caption-corner">2020年意大利马泰拉</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(13)">
+                <img src="images/sketch/2020年意大利Alberobello.jpg" alt="2020年意大利Alberobello">
+                <div class="image-caption-corner">2020年意大利Alberobello</div>
+            </div>
+        </div>
     </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">&#10094;</button>
+            <img class="lightbox-image" id="lightbox-image" src="" alt="">
+            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&#10095;</button>
+        </div>
+    </div>
 
     <!-- Search Modal -->
     <div class="search-modal" id="search-modal">
         <div class="search-modal-content">
-            <input type="text" class="search-input" id="search-input" placeholder="搜索故事、城市...">
+            <input type="text" class="search-input" id="search-input" placeholder="搜索...">
             <div class="search-results" id="search-results"></div>
         </div>
     </div>
@@ -311,5 +454,55 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        const images = [
+            'images/sketch/2013年马来西亚仙本拿.JPG',
+            'images/sketch/2013年越南会安.JPG',
+            'images/sketch/2014年日本关西.JPG',
+            'images/sketch/2015年冬天的台湾清境农场.JPG',
+            'images/sketch/2015年柬埔寨01.jpg',
+            'images/sketch/2015年柬埔寨02.JPG',
+            'images/sketch/2016年日本关西红叶.JPG',
+            'images/sketch/2017冰岛钻石沙滩.JPG',
+            'images/sketch/2017年的冰岛上极光.JPG',
+            'images/sketch/2017年挪威Flam.jpg',
+            'images/sketch/2018年匈牙利布达佩斯.jpg',
+            'images/sketch/2020年意大利巴里.jpg',
+            'images/sketch/2020年意大利马泰拉.jpg',
+            'images/sketch/2020年意大利Alberobello.jpg'
+        ];
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox-image').src = images[currentIndex];
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            document.getElementById('lightbox-image').src = images[currentIndex];
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            document.getElementById('lightbox-image').src = images[currentIndex];
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+    </script>
 </body>
 </html>
