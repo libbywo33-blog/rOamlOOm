@@ -1,237 +1,327 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+<style>
+    /* ===== 网页端导航 (正常大小) ===== */
+    @media (min-width: 769px) {
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
+            font-size: 1.3rem;  /* 网页端正常大小 */
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            transition: all 0.2s ease;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--accent-main);
+            background: rgba(163, 177, 138, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Logo 和头像网页端正常大小 */
+        .logo img {
+            height: 40px;
+        }
+        
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .nav-btn {
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+        }
+    }
+    
+    /* ===== 手机端导航 (紧凑版) ===== */
+    @media (max-width: 768px) {
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        /* Logo 和头像缩小 */
+        .logo img {
+            height: 32px !important;
+        }
+        
+        .nav-avatar {
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        /* 按钮组 */
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            order: 2;
+        }
+        
+        .nav-btn {
+            font-size: 1.1rem !important;
+            width: 36px !important;
+            height: 36px !important;
+        }
+        
+        /* 导航菜单 - 放在第二行 */
+        .nav-menu {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            width: 100%;
+            order: 3;
+            margin-top: 12px;
+            padding: 5px 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 !important;
+        }
+        
+        .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', cursive, sans-serif;
+            font-size: 1rem !important;
+            padding: 6px 15px !important;
+            white-space: nowrap;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            text-decoration: none;
+            border-radius: 30px;
+        }
+        
+        .nav-menu a:hover {
+            background: var(--accent-main);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero 调整 */
+        .hero {
+            min-height: 250px !important;
+            margin-top: 10px;
+        }
+        
+        .hero p {
+            font-size: 1rem !important;
+            padding: 12px 20px !important;
+            white-space: normal !important;
+            width: 95% !important;
+        }
+    }
+    
+    /* 更小屏幕 */
+    @media (max-width: 480px) {
+        .nav-menu a {
+            font-size: 0.9rem !important;
+            padding: 5px 12px !important;
+        }
+        
+        .logo img {
+            height: 28px !important;
+        }
+        
+        .nav-avatar {
+            width: 28px !important;
+            height: 28px !important;
+        }
+        
+        .nav-btn {
+            font-size: 1rem !important;
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        .hero {
+            min-height: 220px !important;
+        }
+        
+        .hero p {
+            font-size: 0.9rem !important;
+            padding: 10px 15px !important;
+        }
+    }
+
+    /* ===== 新增：图片网格自适应样式（只改这里，其余不变）===== */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+        aspect-ratio: 1 / 1;
+        background-color: #e9ecef;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .image-caption-corner {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+    /* 手机端图片网格紧凑排列 */
+    @media (max-width: 768px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+        .image-caption-corner {
+            font-size: 0.6rem;
+            padding: 3px 6px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.8rem;
+        }
+        .image-caption-corner {
+            font-size: 0.55rem;
+            padding: 2px 5px;
+        }
+    }
+
+    /* 确保container和原有样式不冲突 */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* 修复lightbox可能的问题 */
+    .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+    .lightbox.active {
+        display: flex;
+    }
+    .lightbox-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+    }
+    .lightbox-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 2rem;
+        color: white;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        font-size: 2rem;
+        padding: 1rem;
+        cursor: pointer;
+    }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    /* 搜索模态框 */
+    .search-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+    }
+    .search-modal.active {
+        display: flex;
+    }
+    .search-modal-content {
+        background: var(--bg-secondary);
+        padding: 2rem;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+    }
+    .search-input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+</style>
+    
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="旅行摄影 - 漫游BLOG">
     <title>摄影 - 漫游BLOG</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* ===== 只修改图片网格部分，其余完全保持您原来的样式 ===== */
-        
-        /* 覆盖原来的 .gallery-grid 样式，实现自适应排列 */
-        .gallery-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
-            gap: 1.5rem !important;
-            margin: 3rem 0 !important;
-        }
-        
-        /* 图片卡片保持正方形比例，图片填满不变形 */
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-            aspect-ratio: 1 / 1;
-            background-color: #e9ecef;
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        /* 右下角文字标签（保持您原来的样式） */
-        .image-caption-corner {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            opacity: 0.8;
-            pointer-events: none;
-        }
-        
-        /* 手机端：图片网格列宽缩小，保持紧凑 */
-        @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-                gap: 1rem !important;
-            }
-            
-            .image-caption-corner {
-                font-size: 0.6rem;
-                padding: 3px 6px;
-                bottom: 6px;
-                left: 6px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
-                gap: 0.8rem !important;
-            }
-            
-            .image-caption-corner {
-                font-size: 0.55rem;
-                padding: 2px 5px;
-            }
-        }
-        
-        /* ===== 以下是您原来的导航样式，完全没改 ===== */
-        @media (min-width: 769px) {
-            .nav-menu {
-                display: flex;
-                list-style: none;
-                gap: 2rem;
-                margin: 0;
-                padding: 0;
-            }
-            
-            .nav-menu a {
-                font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
-                font-size: 1.3rem;
-                font-weight: 500;
-                color: var(--text-primary);
-                text-decoration: none;
-                padding: 0.5rem 0.8rem;
-                transition: all 0.2s ease;
-                border-radius: 30px;
-                display: inline-block;
-            }
-            
-            .nav-menu a:hover {
-                color: var(--accent-main);
-                background: rgba(163, 177, 138, 0.1);
-                transform: translateY(-2px);
-            }
-            
-            .logo img {
-                height: 40px;
-            }
-            
-            .nav-avatar {
-                width: 36px;
-                height: 36px;
-            }
-            
-            .nav-btn {
-                font-size: 1.2rem;
-                width: 40px;
-                height: 40px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 0;
-            }
-            
-            .logo img {
-                height: 32px !important;
-            }
-            
-            .nav-avatar {
-                width: 32px !important;
-                height: 32px !important;
-            }
-            
-            .nav-actions {
-                display: flex;
-                gap: 8px;
-                order: 2;
-            }
-            
-            .nav-btn {
-                font-size: 1.1rem !important;
-                width: 36px !important;
-                height: 36px !important;
-            }
-            
-            .nav-menu {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                gap: 8px !important;
-                width: 100%;
-                order: 3;
-                margin-top: 12px;
-                padding: 5px 0;
-            }
-            
-            .nav-menu li {
-                margin: 0 !important;
-            }
-            
-            .nav-menu a {
-                font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', cursive, sans-serif;
-                font-size: 1rem !important;
-                padding: 6px 15px !important;
-                white-space: nowrap;
-                background: var(--bg-secondary);
-                border: 1px solid var(--border-color);
-                box-shadow: var(--shadow-sm);
-                text-decoration: none;
-                border-radius: 30px;
-            }
-            
-            .nav-menu a:hover {
-                background: var(--accent-main);
-                color: white;
-                transform: translateY(-2px);
-            }
-            
-            .hero {
-                min-height: 250px !important;
-                margin-top: 10px;
-            }
-            
-            .hero p {
-                font-size: 1rem !important;
-                padding: 12px 20px !important;
-                white-space: normal !important;
-                width: 95% !important;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .nav-menu a {
-                font-size: 0.9rem !important;
-                padding: 5px 12px !important;
-            }
-            
-            .logo img {
-                height: 28px !important;
-            }
-            
-            .nav-avatar {
-                width: 28px !important;
-                height: 28px !important;
-            }
-            
-            .nav-btn {
-                font-size: 1rem !important;
-                width: 32px !important;
-                height: 32px !important;
-            }
-            
-            .hero {
-                min-height: 220px !important;
-            }
-            
-            .hero p {
-                font-size: 0.9rem !important;
-                padding: 10px 15px !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -370,7 +460,7 @@
             'images/sketch/2013年越南会安.JPG',
             'images/sketch/2014年日本关西.JPG',
             'images/sketch/2015年冬天的台湾清境农场.JPG',
-            'images/sketch/2015年柬埔寨01.JPG',
+            'images/sketch/2015年柬埔寨01.jpg',
             'images/sketch/2015年柬埔寨02.JPG',
             'images/sketch/2016年日本关西红叶.JPG',
             'images/sketch/2017冰岛钻石沙滩.JPG',
