@@ -1,360 +1,128 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>摄影 - 漫游BLOG</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    /* ===== 网页端导航 (正常大小) ===== */
-    @media (min-width: 769px) {
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-menu a {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
-            font-size: 1.3rem;  /* 网页端正常大小 */
-            font-weight: 500;
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 0.5rem 0.8rem;
-            transition: all 0.2s ease;
-            border-radius: 30px;
-            display: inline-block;
-        }
-        
-        .nav-menu a:hover {
-            color: var(--accent-main);
-            background: rgba(163, 177, 138, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        /* Logo 和头像网页端正常大小 */
-        .logo img {
-            height: 40px;
-        }
-        
-        .nav-avatar {
-            width: 36px;
-            height: 36px;
-        }
-        
-        .nav-btn {
-            font-size: 1.2rem;
-            width: 40px;
-            height: 40px;
-        }
-    }
-    
-    /* ===== 手机端导航 (紧凑版) ===== */
-    @media (max-width: 768px) {
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-        }
-        
-        /* Logo 和头像缩小 */
-        .logo img {
-            height: 32px !important;
-        }
-        
-        .nav-avatar {
-            width: 32px !important;
-            height: 32px !important;
-        }
-        
-        /* 按钮组 */
-        .nav-actions {
-            display: flex;
-            gap: 8px;
-            order: 2;
-        }
-        
-        .nav-btn {
-            font-size: 1.1rem !important;
-            width: 36px !important;
-            height: 36px !important;
-        }
-        
-        /* 导航菜单 - 放在第二行 */
-        .nav-menu {
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: wrap !important;
-            justify-content: center !important;
-            align-items: center !important;
-            gap: 8px !important;
-            width: 100%;
-            order: 3;
-            margin-top: 12px;
-            padding: 5px 0;
-        }
-        
-        .nav-menu li {
-            margin: 0 !important;
-        }
-        
-        .nav-menu a {
-            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', cursive, sans-serif;
-            font-size: 1rem !important;
-            padding: 6px 15px !important;
-            white-space: nowrap;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            text-decoration: none;
-            border-radius: 30px;
-        }
-        
-        .nav-menu a:hover {
-            background: var(--accent-main);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Hero 调整 */
-        .hero {
-            min-height: 250px !important;
-            margin-top: 10px;
-        }
-        
-        .hero p {
-            font-size: 1rem !important;
-            padding: 12px 20px !important;
-            white-space: normal !important;
-            width: 95% !important;
-        }
-    }
-    
-    /* 更小屏幕 */
-    @media (max-width: 480px) {
-        .nav-menu a {
-            font-size: 0.9rem !important;
-            padding: 5px 12px !important;
-        }
-        
-        .logo img {
-            height: 28px !important;
-        }
-        
-        .nav-avatar {
-            width: 28px !important;
-            height: 28px !important;
-        }
-        
-        .nav-btn {
-            font-size: 1rem !important;
-            width: 32px !important;
-            height: 32px !important;
-        }
-        
-        .hero {
-            min-height: 220px !important;
-        }
-        
-        .hero p {
-            font-size: 0.9rem !important;
-            padding: 10px 15px !important;
-        }
-    }
-</style>
-    
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="旅行摄影 - 漫游BLOG">
-    <title>摄影 - 漫游BLOG</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的 Logo 图片 URL -->
-                    <img src="images/about/logo.jpg"auto=format&fit=crop&w=100&q=80" alt="rOamlOOm Logo" style="height: 40px;">
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="stories.html">Stories</a></li>
-                    <li><a href="vlog.html">Vlog</a></li>
-                    <li><a href="sketch.html">Sketch</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <button class="nav-btn" id="search-toggle" title="搜索">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="nav-btn" id="theme-toggle" title="切换主题">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的个人头像 URL -->
-                    <img src="images/about/me.jpeg"auto=format&fit=crop&w=100&q=80" alt="个人头像" class="nav-avatar" title="个人头像">
-                </div>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero -->
-<section class="hero" style="background-image: url('images/about/sketch.jpg'); background-size: cover; background-position: center; min-height: 300px; position: relative;">
-    <div class="container" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 2; width: 90%; max-width: 900px;">
-        <p style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-size: 1.5rem; font-style: italic; background: rgba(0,0,0,0.3); padding: 18px 30px; border-radius: 50px; backdrop-filter: blur(3px); display: inline-block; white-space: nowrap;">
-            愿每一只不被束缚的猫，都能在风中收获全部的敬意与爱意
-        </p>
-    </div>
+/* ===== 图片墙优化（核心） ===== */
+
+/* 桌面端自适应（重点） */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+/* 图片统一比例 */
+.gallery-item {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* hover效果（高级感） */
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* 手机端保持你原来的（2列） */
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+/* ===== 图片角标 ===== */
+.image-caption-corner {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+}
+
+/* ===== Hero 微调 ===== */
+.hero {
+    min-height: 280px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<nav>
+<div class="logo">
+<img src="images/about/logo.jpg" alt="logo">
+</div>
+
+<ul class="nav-menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="stories.html">Stories</a></li>
+<li><a href="vlog.html">Vlog</a></li>
+<li><a href="sketch.html">Sketch</a></li>
+<li><a href="about.html">About</a></li>
+</ul>
+
+<div class="nav-actions">
+<button class="nav-btn"><i class="fas fa-search"></i></button>
+<button class="nav-btn"><i class="fas fa-moon"></i></button>
+<img src="images/about/me.jpeg" class="nav-avatar">
+</div>
+</nav>
+</div>
+</header>
+
+<!-- Hero -->
+<section class="hero" style="background-image:url('images/about/sketch.jpg'); background-size:cover; background-position:center; position:relative;">
+<div class="container" style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); text-align:center;">
+<p style="color:white; font-size:1.3rem; background:rgba(0,0,0,0.3); padding:12px 20px; border-radius:40px;">
+愿每一只不被束缚的猫，都能在风中收获全部的敬意与爱意
+</p>
+</div>
 </section>
 
-    <!-- Gallery -->
-    <main class="container">
-        <div class="gallery-grid" style="margin: 3rem 0;">
-            <!-- 【替换说明】修改每个 src 为您的摄影图片 URL -->
-            <div class="gallery-item" onclick="openLightbox(0)">
-                <img src="images/sketch/2013年马来西亚仙本拿.JPG" auto=format&fit=crop&w=400&q=80" 
-alt="摄影 1">
-                <div class="image-caption-corner">2013年马来西亚仙本那</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(1)">
-                <img src="images/sketch/2013年越南会安.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 2">
-                <div class="image-caption-corner">2013年越南会安</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(2)">
-                <img src="images/sketch/2014年日本关西.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 3">
-                <div class="image-caption-corner">2014年日本关西</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(3)">
-                <img src="images/sketch/2015年冬天的台湾清境农场.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 4">
-                <div class="image-caption-corner">2015年冬天的台湾清境农场</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(4)">
-                <img src="images/sketch/2015年柬埔寨01.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 5">
-                <div class="image-caption-corner">2015年柬埔寨</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(5)">
-                <img src="images/sketch/2015年柬埔寨02.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 6">
-                <div class="image-caption-corner">2015年柬埔寨</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(6)">
-                <img src="images/sketch/2016年日本关西红叶.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 7">
-                <div class="image-caption-corner">2016年日本关西红叶</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(7)">
-                <img src="images/sketch/2017冰岛钻石沙滩.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 8">
-                <div class="image-caption-corner">2017冰岛钻石沙滩</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(8)">
-                <img src="images/sketch/2017年的冰岛上极光.JPG" auto=format&fit=crop&w=400&q=80" alt="摄影 9">
-                <div class="image-caption-corner">2017年的冰岛上极光</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(9)">
-                <img src="images/sketch/2017年挪威Flam.jpg" auto=format&fit=crop&w=400&q=80" alt="摄影 10">
-                <div class="image-caption-corner">2017年挪威Flam</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(10)">
-                <img src="images/sketch/2018年匈牙利布达佩斯.jpg" auto=format&fit=crop&w=400&q=80" alt="摄影 11">
-                <div class="image-caption-corner">2018年匈牙利布达佩斯</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(11)">
-                <img src="images/sketch/2020年意大利巴里.jpg" auto=format&fit=crop&w=400&q=80" alt="摄影 12">
-                <div class="image-caption-corner">2020年意大利巴里</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(12)">
-                <img src="images/sketch/2020年意大利马泰拉.jpg" auto=format&fit=crop&w=400&q=80" alt="摄影 13">
-                <div class="image-caption-corner">2020年意大利马泰拉</div>
-            </div>
-            <div class="gallery-item" onclick="openLightbox(13)">
-                <img src="images/sketch/2020年意大利Alberobello.jpg" auto=format&fit=crop&w=400&q=80" alt="摄影 14">
-                <div class="image-caption-corner">2020年意大利Alberobello</div>
-            </div>
-        </div>
-    </main>
+<!-- Gallery -->
+<main class="container">
+<div class="gallery-grid" style="margin:3rem 0;">
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-            <button class="lightbox-nav lightbox-prev" onclick="prevImage()">&#10094;</button>
-            <img class="lightbox-image" id="lightbox-image" src="" alt="">
-            <button class="lightbox-nav lightbox-next" onclick="nextImage()">&#10095;</button>
-        </div>
-    </div>
+<div class="gallery-item"><img src="images/sketch/2013年马来西亚仙本拿.JPG"><div class="image-caption-corner">2013 马来西亚</div></div>
+<div class="gallery-item"><img src="images/sketch/2013年越南会安.JPG"><div class="image-caption-corner">2013 越南</div></div>
+<div class="gallery-item"><img src="images/sketch/2014年日本关西.JPG"><div class="image-caption-corner">2014 日本</div></div>
+<div class="gallery-item"><img src="images/sketch/2015年冬天的台湾清境农场.JPG"><div class="image-caption-corner">2015 台湾</div></div>
+<div class="gallery-item"><img src="images/sketch/2015年柬埔寨01.JPG"><div class="image-caption-corner">2015 柬埔寨</div></div>
+<div class="gallery-item"><img src="images/sketch/2015年柬埔寨02.JPG"><div class="image-caption-corner">2015 柬埔寨</div></div>
+<div class="gallery-item"><img src="images/sketch/2016年日本关西红叶.JPG"><div class="image-caption-corner">2016 日本</div></div>
+<div class="gallery-item"><img src="images/sketch/2017冰岛钻石沙滩.JPG"><div class="image-caption-corner">2017 冰岛</div></div>
+<div class="gallery-item"><img src="images/sketch/2017年的冰岛上极光.JPG"><div class="image-caption-corner">2017 极光</div></div>
+<div class="gallery-item"><img src="images/sketch/2017年挪威Flam.jpg"><div class="image-caption-corner">2017 挪威</div></div>
+<div class="gallery-item"><img src="images/sketch/2018年匈牙利布达佩斯.jpg"><div class="image-caption-corner">2018 匈牙利</div></div>
+<div class="gallery-item"><img src="images/sketch/2020年意大利巴里.jpg"><div class="image-caption-corner">2020 意大利</div></div>
+<div class="gallery-item"><img src="images/sketch/2020年意大利马泰拉.jpg"><div class="image-caption-corner">2020 意大利</div></div>
+<div class="gallery-item"><img src="images/sketch/2020年意大利Alberobello.jpg"><div class="image-caption-corner">2020 意大利</div></div>
 
-    <!-- Search Modal -->
-    <div class="search-modal" id="search-modal">
-        <div class="search-modal-content">
-            <input type="text" class="search-input" id="search-input" placeholder="搜索...">
-            <div class="search-results" id="search-results"></div>
-        </div>
-    </div>
+</div>
+</main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
-            </div>
-            <p class="footer-copyright">&copy; 2026 rOamlOOm 漫游BLOG. 保留所有权利。</p>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
-    <script>
-const images = [
-    'images/sketch/2013年马来西亚仙本拿.JPG',
-    'images/sketch/2013年越南会安.JPG',
-    'images/sketch/2014年日本关西.JPG',
-    'images/sketch/2015年冬天的台湾清境农场.JPG',
-    'images/sketch/2015年柬埔寨01.jpg',
-    'images/sketch/2015年柬埔寨02.JPG',
-    'images/sketch/2016年日本关西红叶.JPG',
-    'images/sketch/2017冰岛钻石沙滩.JPG',
-    'images/sketch/2017年的冰岛上极光.JPG',
-    'images/sketch/2017年挪威Flam.jpg',
-    'images/sketch/2018年匈牙利布达佩斯.jpg',
-    'images/sketch/2020年意大利巴里.jpg',
-    'images/sketch/2020年意大利马泰拉.jpg',
-    'images/sketch/2020年意大利Alberobello.jpg'
-];
-        let currentIndex = 0;
-
-        function openLightbox(index) {
-            currentIndex = index;
-            document.getElementById('lightbox').classList.add('active');
-            document.getElementById('lightbox-image').src = images[currentIndex];
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % images.length;
-            document.getElementById('lightbox-image').src = images[currentIndex];
-        }
-
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            document.getElementById('lightbox-image').src = images[currentIndex];
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (!document.getElementById('lightbox').classList.contains('active')) return;
-            if (e.key === 'ArrowRight') nextImage();
-            if (e.key === 'ArrowLeft') prevImage();
-            if (e.key === 'Escape') closeLightbox();
-        });
-
-        document.getElementById('lightbox').addEventListener('click', (e) => {
-            if (e.target.id === 'lightbox') closeLightbox();
-        });
-    </script>
 </body>
 </html>
