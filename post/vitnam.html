@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <style>
+    /* ===== 网页端导航 (正常大小) ===== */
+    @media (min-width: 769px) {
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', 'Yuanti SC', cursive, sans-serif;
+            font-size: 1.3rem;  /* 网页端正常大小 */
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            transition: all 0.2s ease;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--accent-main);
+            background: rgba(163, 177, 138, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Logo 和头像网页端正常大小 */
+        .logo img {
+            height: 40px;
+        }
+        
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .nav-btn {
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+        }
+    }
+    
+    /* ===== 手机端导航 (紧凑版) ===== */
+    @media (max-width: 768px) {
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        /* Logo 和头像缩小 */
+        .logo img {
+            height: 32px !important;
+        }
+        
+        .nav-avatar {
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        /* 按钮组 */
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            order: 2;
+        }
+        
+        .nav-btn {
+            font-size: 1.1rem !important;
+            width: 36px !important;
+            height: 36px !important;
+        }
+        
+        /* 导航菜单 - 放在第二行 */
+        .nav-menu {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            width: 100%;
+            order: 3;
+            margin-top: 12px;
+            padding: 5px 0;
+        }
+        
+        .nav-menu li {
+            margin: 0 !important;
+        }
+        
+        .nav-menu a {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', '幼圆', cursive, sans-serif;
+            font-size: 1rem !important;
+            padding: 6px 15px !important;
+            white-space: nowrap;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            text-decoration: none;
+            border-radius: 30px;
+        }
+        
+        .nav-menu a:hover {
+            background: var(--accent-main);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero 调整 */
+        .hero {
+            min-height: 250px !important;
+            margin-top: 10px;
+        }
+        
+        .hero p {
+            font-size: 1rem !important;
+            padding: 12px 20px !important;
+            white-space: normal !important;
+            width: 95% !important;
+        }
+    }
+    
+    /* 更小屏幕 */
+    @media (max-width: 480px) {
+        .nav-menu a {
+            font-size: 0.9rem !important;
+            padding: 5px 12px !important;
+        }
+        /* ===== 手机端隐藏左侧目录 ===== */
+    @media (max-width: 768px) {
+        .article-toc {
+            display: none !important;
+        }
+    }
+        
+        .logo img {
+            height: 28px !important;
+        }
+        
+        .nav-avatar {
+            width: 28px !important;
+            height: 28px !important;
+        }
+        
+        .nav-btn {
+            font-size: 1rem !important;
+            width: 32px !important;
+            height: 32px !important;
+        }
+        
+        .hero {
+            min-height: 220px !important;
+        }
+        
+        .hero p {
+            font-size: 0.9rem !important;
+            padding: 10px 15px !important;
+        }
+    }
+        /* ===== 电脑端：目录和文章并排 ===== */
+@media (min-width: 769px) {
+    .article-layout {
+        display: flex;
+        gap: 3rem;
+        align-items: flex-start;
+    }
+    
+    .article-toc {
+        flex: 0 0 240px;
+        position: sticky;
+        top: 2rem;
+        align-self: start;
+    }
+    
+    .article-content {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+/* ===== 手机端：隐藏原有目录，显示浮窗按钮 ===== */
+/* 让所有文章图片自适应手机屏幕 */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+}
+
+/* 确保文章容器不溢出 */
+.article-content {
+    overflow-x: hidden;
+}
+
+/* ===== 手机浮窗目录样式 ===== */
+.mobile-toc-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #a3b18a;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+}
+
+.mobile-toc-panel {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 260px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    padding: 1rem;
+    z-index: 1001;
+    display: none;
+    border: 1px solid #e0e0e0;
+}
+
+.mobile-toc-panel.show {
+    display: block;
+}
+
+.mobile-toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+#close-toc-panel {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+#mobile-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#mobile-toc-list li {
+    margin: 0;
+    padding: 0;
+}
+
+#mobile-toc-list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 8px 0;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+#mobile-toc-list a:hover {
+    color: #a3b18a;
+}
+
+/* 手机端显示浮窗按钮 */
+@media (max-width: 768px) {
+    .mobile-toc-btn {
+        display: flex;
+    }
+}
+
+</style>
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="旅行文章 - 漫游BLOG">
+    <title>文章 - 漫游BLOG</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的 Logo 图片 URL -->
+                    <img src="../images/about/logo.jpg"auto=format&fit=crop&w=100&q=80" alt="rOamlOOm Logo" style="height: 40px;">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../stories.html">Stories</a></li>
+                    <li><a href="../vlog.html">Vlog</a></li>
+                    <li><a href="../sketch.html">Sketch</a></li>
+                    <li><a href="../about.html">About</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-btn" id="search-toggle" title="搜索">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="nav-btn" id="theme-toggle" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <!-- 【替换说明】将下方 src 中的图片链接替换为您的个人头像 URL -->
+                    <img src="../images/about/me.jpeg"auto=format&fit=crop&w=100&q=80" alt="个人头像" class="nav-avatar" title="个人头像">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Hero -->
+<section class="article-hero" style="background-image: url('../images/norway2/images.jpg');">
+        <!-- 【替换说明】修改上方 style 中的 background-image URL 为您的文章英雄图片 -->
+        <div class="container">
+            <div class="article-hero-content">
+                <span class="card-tag">十三年后，我居然两个月怒刷两次南越</span>
+                <h1>性价比王者越南</h1>
+                <div class="article-meta">
+                    <span>旅游时间：2026年2月-4月</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="article-body">
+<div class="container-narrow article-layout">
+
+    <!-- 左侧目录 -->
+    <aside class="article-toc">
+    <div class="toc-title">📌 TOUR GUIDE 📌</div>
+        <ul id="toc"></ul>
+    </aside>
+            <div class="article-content">
+            <h1>13年前与2026年选择</h1>
+            <p>第一次去越南是2013年，那会儿我妥妥旅行小白，除了泰国哪都没去过。当初选越南真没什么文艺情怀，纯纯因为机票太便宜！越南航空广州往返河内，才一千六百多。
+那趟全程只为会安一座城，现在回头看真的太幸运！13年前的会安冷门又清净，街上没什么游客、没有扎堆网红店、商业化几乎为零，灯笼古街安安静静，晚风都是温柔的。谁能想到十三年后，这里直接爆火成东南亚顶流小城。翻出当年的无人旧照，真的感慨：小众宝藏终究是藏不住了。</p>
+            <img src="../images/vitnam/vitnam1.jpg" alt="越南" width="800">
+            <p>2013年会安海边</p>
+            <img src="../images/vitnam/vitnam2.jpg" alt="越南" width="800">
+            <p>2013年会安老镇</p>
+
+            <p>一晃十三年，来到2026年</p>
+            <p>一场腿伤直接打乱了所有长途远行计划。不想荒废假期，就把目光锁定在了短途松弛的南越。过年拉上朋友，浅浅度假躺了一周。
+本以为只是一次普通散心，结果直接彻底入坑！一个月后拿到赔偿，果断裸奔二刷，一个人在南越慢悠悠躺了整整两周。</p>
+            <p>两次短聚+长住，走遍国内外多城，我终于认清：我真的太吃越南这种松弛慵懒的氛围感了！
+2013年和朋友三人同行，从河内一路坐通宵过夜巴士南下，途经顺化、岘港、会安，全程走马观花、赶路打卡。
+但走遍这么多城市后才懂，旅行的快乐从来不是赶场打卡。现在的我，偏爱慢下来，钻进市井街巷、蹲守日出日落、感受一座城的烟火气息。而南越的海岛山野，完美适配我现在的摆烂式慢旅行。</p>
+            <img src="../images/vitnam/vitnam3.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam4.jpg" alt="越南" width="800">
+
+            <!-- Multi-image Gallery -->
+            <div class="article-gallery">
+
+            </div>
+
+            <h1>为啥短短两个月，我还是选择南越躺两周呢？</h1>
+            <p>来，听我唠叨下～</p>
+
+            <h3>01 真的便宜！广州人说走就走的短途快乐</h3>
+            <p>2026年大环境波动，油价、各地安全问题让很多人出境畏手畏脚，网上清一色说东南亚不安全、不值得去。
+但我亲测：真的没那么多坑！只要不贪低价购物团、不随便去人少复杂的地方、守好自己的出行底线，全程安稳省心，完全不用过度焦虑。
+最圈粉的是，南越是真·平民友好型旅行地，机票、交通、物价双低，普通人出行无压力！
+今年机票价格也是很可以～
+2月过年组队出行：广州南航往返胡志明 1921元/人；胡志明飞昆岛（含行李额度）960元/人/来回。
+4月独自二刷出行：广州南航往返芽庄 1658元/人；芽庄往返大叻城际车 167元/人。
+广州直飞南越仅2个多小时，比国内跨省飞行还短！全程临海航线，飞行超级平稳、几乎无颠簸，恐飞党也能无脑冲，真正实现周末、假期随时出逃。</p>
+            <p>两刷南越最大的直观快乐：汇率持续真香，越逛越划算！
+十三年前汇率仅1:3300，2026年2月涨到1:3600，4月直接飙升至1:3800，人民币购买力大幅拉升，妥妥反向薅羊毛，旅行幸福感直接翻倍。
+实用小提醒：越南绝大多数小店、夜市只收现金，刷卡会被收取3%额外手续费，非常不划算，建议提前换现。换钱很便捷，人民币、美金均可兑换，美金兑换汇率更优。我日常习惯：有美金就用美金换，没有直接人民币兑换，简单不折腾。
+整体物价极度亲民，没有景区漫天溢价，性价比吊打国内多数网红旅行地：
+住宿：我全程优选Airbnb民宿，两百多就能住到装修精致、采光绝佳的房源；哪怕是昆岛一线海景度假酒店，一晚仅六百余元，对标国内同档次酒店，性价比直接碾压。
+吃饭：妥妥本命美食天堂！街头地道越南粉、法棍、春卷，十几元甚至几元就能吃饱吃爽；高端精致fine dining，人均两百多就能解锁，口感和仪式感拉满。
+最戳我的是越南饮食风格：分量适中、清淡少油、清爽健康，连吃半个月完全不腻、无肠胃负担，吃货度假无脑适配（不过我还是保险在越南买了驱虫药吃一下）</p>
+
+            <h3>02 一城一景！南北全程玩法不重样</h3>
+            <p>越南最绝的魅力：南北城市风格完全割裂、绝不同质化！北越是复古老城烟火，南越是海岛、沙丘、山野、都市多元混搭，想文艺、想躺平、想看海、想拍大片，全都能满足。</p>
+            
+            <h2>▫️ 河内（北越起点）：复古老城的岁月烟火</h2>
+            <p>作为大多数人越南之行的第一站，河内自带浓郁的复古法式氛围感，节奏缓慢、烟火气十足，但人是真多。</p>
+            <p>必逛核心景点：还剑湖是城市地标，湖水清澈、周边古树环绕，早晚有本地老人散步、晨练，傍晚光影温柔，随手拍都是复古氛围感；紧邻的河内老城区三十六行街，每条街巷主打一类特色小店，杂货、手信、美食、文创应有尽有，不用刻意找店，随意穿梭都是市井烟火。</p>
+            <p>小众出片点位：河内大教堂纯白法式建筑超级惊艳，哥特式风格搭配蓝天，干净治愈，是老城必拍打卡点；镇国寺古朴静谧，临水而建，香火旺盛，避开人群慢慢逛，能感受北越的宁静底蕴。
+游玩建议：河内全程安排2晚足够，不用赶景点。白天逛老街、大教堂、还剑湖，傍晚坐街边小摊喝越南冰咖啡、吃地道小吃，沉浸式体验本地人慢生活即可。</p>
+            <img src="../images/vitnam/vitnam5.jpg" alt="越南" width="800">
+
+            <h2>▫️ 会安（经典古城）：灯笼特色的温柔水乡</h2>
+            <p>会安是我2013年越南之行的初心。</p>
+            <p>必体验核心玩法：白天逛会安古城，中式古建筑、法式小屋、日式廊桥错落交织，中西风格交融极具特色，街巷里遍布灯笼作坊、手工小店，慢悠悠闲逛超级治愈；傍晚是会安的高光时刻，全城灯笼亮起，暖黄灯光铺满古街，晚风拂过灯火摇曳，氛围感直接封神。</p>
+            <p>小众特色体验：晚上可以坐小船夜游秋盆河，亲手放一盏祈福灯笼，随波漂流的灯火温柔又浪漫；
+必看：发牌唱曲（Bài chòi）—— 会安本地最典型互动戏剧</p>
+            <p>美食必吃：会安三宝一定要解锁！白玫瑰、炸馄饨、会安米粉，味道地道独特，是别处吃不到的专属风味。</p>
+            <img src="../images/vitnam/vitnam6.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam7.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam8.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam9.jpg" alt="越南" width="800">
+
+            <h2>▫️ 芽庄（海滨躺平天花板）：无脑度假快乐老家</h2>
+            <p>芽庄是南越最适配懒人度假的海滨小城，不用赶行程、不用做复杂攻略，主打一个彻底摆烂放松，建议市中心连住3晚，时间充裕可加跳岛行程。</p>
+            <p>芽D1 落地即松弛：落地放下行李，第一时间冲一碗热气腾腾的鱼汤粉，鲜香暖胃，瞬间扫除赶路疲惫；晚上安排一场地道越南足疗，平价舒服，直接开启度假躺平模式。</p>
+            <p>D2 市井+美景双丰收：早上去谭市场沉浸式逛本地市集，果蔬、零食、手信、饰品一应俱全，平价不踩雷，适合采购伴手礼；午后找街边小众咖啡店，坐下来喝杯慢滴漏咖啡发呆，虚度慵懒午后；傍晚前往婆那加占婆塔，古老的占婆风格建筑依山傍海，日落时分光影绝美，原图直出都是大片；晚上必看DO Theatre的水上木偶剧，票价低廉、剧情精彩，传统技艺+舞台表演比国内很多都好。</p>
+            <p>D3 精致慢生活：早起就近打卡海边瑜伽馆，伴着海风舒展身心，治愈感拉满；课后吃一顿高性价比brunch，品类、口感远超国内同价位；中午逛乐天超市囤零食、买特产；傍晚打卡新鲜肥美海鲜排档，晚上跟着韩国游客盲选SPA，不出错的顶级放松体验。</p>
+            <p>进阶玩法：时间充足可以冲珍珠岛，海岛绿植茂密、沙滩细腻，有超多水上项目和游乐园，适合玩一整天；也可以报名跳岛游，出海浮潜、看玻璃海，解锁海岛另一面的浪漫。</p>
+            <img src="../images/vitnam/vitnam10.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam11.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam12.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam13.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam14.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam15.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam16.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam17.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam18.jpg" alt="越南" width="800">
+
+            <h2>▫️ 美奈（一半大海一半沙丘）：小众极致出片地</h2>
+            <p>美奈是我想去但没去成的地方，主要是来回芽庄要4个小时，如果胡志明出发路线更好一些。美奈特色就是一边是蔚蓝大海，一边是赤红沙丘，山海与荒漠并存，氛围感独一无二，摄影爱好者必冲！</p>
+            <p>必打卡四大点位：【红沙丘】日落绝美，赤红沙粒搭配橘色晚霞，随手拍都是荒漠大片；【白沙丘】规模更大、视野更开阔，可以体验沙地摩托，驰骋沙丘超解压；【仙女溪】浅溪潺潺、红土岩壁独特，赤脚漫步超治愈；【美奈渔港】清晨超级热闹，渔船归港、海鲜成堆，烟火气拉满。</p>
+            <p>最优行程：美奈建议安排2天1晚，不用赶路。早起去渔港看日出、逛早市，白天冲仙女溪玩水、打卡沙丘，傍晚蹲沙丘日落，晚上吃平价新鲜海鲜，全程松弛又出片。</p>
+
+            <h2>▫️ 大叻（云端治愈小城）：我的年度本命城市</h2>
+            <p>这次独行我在大叻躺了整整一周，直接封神为南越最治愈的城市！1500米海拔自带天然空调，全年凉爽舒适，山林、花海、云雾、法式小屋交织，温柔到骨子里，真心建议至少住4晚慢逛。</p>
+            <p>核心必玩景点：【大叻疯狂屋】可以去看，拍照是挺出片，但我是看过高迪的人，真的很难被这种打动；【春香湖】环湖风光治愈，可骑行、可散步，傍晚看落日洒在湖面，氛围感拉满；【竹林禅院】清幽静谧，山林环绕、绿植茂密，适合静心放空、逃离喧嚣。</p>
+            <p>专属特色玩法：大叻的精髓就是逛山间咖啡厅！依山而建的小众小店，推窗就是云海山林，点一杯咖啡静坐一下午，吹风看云，所有焦虑瞬间清零。</p>
+            <p>硬核避坑提醒：大叻山路超多陡坡，千万别租小绵羊50cc摩托！马力不足极易半路熄火，一定要租大排量摩托车，骑行顺畅无压力。</p>
+            <p>时间充裕可以打卡平价瑜伽馆健身房，十几元就能解锁治愈运动；去GO超市囤零食手信，性价比超高；一定要住一晚深山民宿，吸氧洗肺、静谧安眠，体验城市没有的松弛感。</p>
+            <img src="../images/vitnam/vitnam19.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam20.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam21.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam22.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam23.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam24.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam25.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam26.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam27.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam28.jpg" alt="越南" width="800">
+
+            <h2>▫️ 胡志明（南国都市）：多处慢慢发掘的烟火都市</h2>
+            <p>作为南越最大的城市，胡志明都市感拉满，但常规景点比较普通，商业化偏重，越南本土服装店内可以买买买，性价比拉满。</p>
+            <p>避坑指南：统一宫、中央邮局可以浅打卡，复古法式建筑很有特色；美术馆逃票太容易（门票很便宜，支持艺术工作喔），展品很一般；市区市集不推荐久逛，陈设简单、性价比低，容易踩雷。</p>
+            <p>避隐藏亮点：胡志明遍地小众咖啡馆、平民米其林河粉店，brunch性价比炸裂，随便找个角落发呆消磨时间都很舒服，越南本土买手店必逛。必看AO SHOW光影秀！还能逛本地MUJI，入手越南限定零食、帆布包，小众伴手礼独一无二。</p>
+            <img src="../images/vitnam/vitnam29.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam30.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam31.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam32.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam33.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam34.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam35.jpg" alt="越南" width="800">
+
+            <h2>▫️ 昆岛（Con Dao）：越南私藏原生态顶流海岛</h2>
+            <p>相比商业化拉满的热门海岛，昆岛极其小众低调，是越南原生生态保留最完整的海岛，还是国家级海洋保护区，几乎没有过度开发，人少、景净、海水通透度直接封神，主打一个静谧治愈、独享山海。</p>
+            <p>必体验小众宝藏玩法：
+这里是越南知名的海龟保育基地，每年3-9月是海龟产卵季，运气好可以夜间跟随保育人员，在无人沙滩静候海龟上岸产卵，还能偶遇新生小海龟奔赴大海，治愈感独一无二，是别处体验不到的专属浪漫。
+昆岛的海水堪称越南马尔代夫，清澈见底、能见度超高，周边遍布原生珊瑚礁，新手小白也能轻松浮潜，近距离邂逅彩色热带鱼群、成片珊瑚，海底生态超级丰富。夜晚沙滩还能偶遇蓝眼泪，荧光海浪氛围感直接拉满，浪漫到极致。</p>
+            <p>小众人文看点：
+昆岛曾是历史悠久的海岛旧址，留存着昆岛监狱等历史遗迹，静静伫立的老建筑，藏着海岛的岁月故事，人文爱好者可以浅逛打卡，感受这座海岛兼具温柔与厚重的双面气质。</p>
+            <p>住宿&游玩心得：
+岛上没有嘈杂的网红商圈，大多是低调轻奢的度假酒店，我住的度假型酒店仅六百多一晚，有热闹的夜市能好好的大吃一顿，也适合躺在酒店泳池放风。</p>
+            <img src="../images/vitnam/vitnam36.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam37.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam38.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam39.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam39.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam40.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam41.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam42.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam43.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam44.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam45.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam46.jpg" alt="越南" width="800">
+            <img src="../images/vitnam/vitnam47.jpg" alt="越南" width="800">
+
+            <h2>▫️ 富国岛（顶流海岛）：适合纯躺平度假</h2>
+            <p>作为越南最热门的顶流海岛，富国岛开发完善、设施齐全，非常适合亲子、懒人纯度假，我是没有去，不过我朋友去了，躺平还是不错的。</p>
+            <p>必体验项目：【跨海缆车】是富国岛标志性项目，横跨碧海、视野绝佳，高空俯瞰整片蔚蓝海域，超级震撼；【水上乐园&游乐园】设施齐全，适合放松玩乐；【海岛浮潜】海水清澈、能见度高，可近距离观赏热带鱼群。</p>
+
+            <h2>想看看世界，现在就出发吧</h2>
+
+            <p>越南每个城市虽然外国人都好多，虽然越南本地人他们大多不会英文，但相对朴实，而且人都很好，大家肢体语言+翻译器足够沟通了。
+相比泰国，极度成熟的旅游城市不一样，越南带一种本地人默默在工作/或者躺平的一种氛围，外国人只是让这个城市更繁荣的感觉，两者和谐，各取所需。</p>
+            <p>2026年春节一周时间，共花了6100元不到/人</p>
+            <p>2026年4月一个人两周，共花了7400元不到/人</p>
+            <p>一个国家重复去的，除了意大利就是越南了。两个我都喜欢南部，那种休闲度假感是他们共通点，但属于他们自己的人文确实独特的，如果你说去意大利太贵（其实也不算太贵，我两次去的南意综合来说十来天一万三左右/人），那我觉得去一趟越南比去一趟海南更划算呢。</p>
+
+
+               <!-- Share -->
+            <div style="text-align: center; padding: 2rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">分享这个故事</p>
+                <div style="display: flex; justify-content: center; gap: 1rem;">
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--accent-main); color: white; border-radius: 50%; text-decoration: none;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--accent-main); color: white; border-radius: 50%; text-decoration: none;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--accent-main); color: white; border-radius: 50%; text-decoration: none;">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+ <!-- Comments Section -->
+    <section class="article-body comments-section">
+        <h2 class="comments-title">
+            评论
+            <span class="comment-count" id="comment-count">0</span>
+        </h2>
+
+        <!-- Comment Form -->
+        <div class="comment-form-wrapper">
+            <h3 class="comment-form-title">发表评论</h3>
+            <form id="comment-form">
+                <div class="comment-form-row">
+                    <div class="comment-form-group">
+                        <label for="comment-name">姓名 *</label>
+                        <input type="text" id="comment-name" name="name" required placeholder="请输入你的姓名">
+                    </div>
+                    <div class="comment-form-group">
+                        <label for="comment-email">邮箱 *</label>
+                        <input type="email" id="comment-email" name="email" required placeholder="请输入你的邮箱">
+                    </div>
+                </div>
+                <div class="comment-form-group">
+                    <label for="comment-content">评论内容 *</label>
+                    <textarea id="comment-content" name="content" required placeholder="分享你的想法和建议..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit-comment">发表评论</button>
+            </form>
+        </div>
+
+        <!-- Comments List -->
+        <div class="comments-list" id="comments-list">
+            <div class="comments-empty">
+                <div class="comments-empty-icon">💬</div>
+                <p>暂无评论，成为第一个评论者吧！</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="search-modal">
+        <div class="search-modal-content">
+            <input type="text" class="search-input" id="search-input" placeholder="搜索...">
+            <div class="search-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 rOamlOOm 漫游BLOG. 保留所有权利。</p>
+        </div>
+    </footer>
+
+            <!-- 手机端浮窗目录按钮 -->
+    <button class="mobile-toc-btn" id="mobile-toc-btn">
+        📖 目录
+    </button>
+
+    <!-- 手机端浮窗目录面板 -->
+    <div class="mobile-toc-panel" id="mobile-toc-panel">
+        <div class="mobile-toc-header">
+            <span>📌 目录</span>
+            <button id="close-toc-panel">✕</button>
+        </div>
+        <ul id="mobile-toc-list"></ul>
+    </div>
+
+    <script src="../js/main.js"></script>
+
+<script>
+// 第一步：为所有 h2 添加 id
+const headings = document.querySelectorAll('.article-content h2');
+headings.forEach((h2, index) => {
+    if (!h2.id) {
+        h2.id = 'section-' + index;
+    }
+});
+
+// 第二步：生成电脑端目录
+const toc = document.getElementById('toc');
+if (toc) {
+    const h2s = document.querySelectorAll('.article-content h2');
+    h2s.forEach(h2 => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.textContent = h2.textContent;
+        a.href = '#' + h2.id;
+        li.appendChild(a);
+        toc.appendChild(li);
+    });
+}
+
+// 第三步：手机端浮窗目录功能
+(function() {
+    // 生成手机端目录列表
+    const mobileTocList = document.getElementById('mobile-toc-list');
+    if (mobileTocList) {
+        const h2s = document.querySelectorAll('.article-content h2');
+        h2s.forEach(h2 => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.textContent = h2.textContent;
+            a.href = '#' + h2.id;
+            li.appendChild(a);
+            mobileTocList.appendChild(li);
+        });
+    }
+    
+    // 打开/关闭浮窗目录
+    const tocBtn = document.getElementById('mobile-toc-btn');
+    const tocPanel = document.getElementById('mobile-toc-panel');
+    const closeBtn = document.getElementById('close-toc-panel');
+    
+    if (tocBtn && tocPanel) {
+        tocBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            tocPanel.classList.toggle('show');
+            console.log('按钮被点击了');  // 调试用
+        });
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                tocPanel.classList.remove('show');
+            });
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (tocPanel && tocBtn) {
+                if (!tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
+                    tocPanel.classList.remove('show');
+                }
+            }
+        });
+    } else {
+        console.log('未找到按钮或面板元素');
+    }
+})();
+</script>
+    
+</body>
+</html>
+
