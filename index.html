@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="漫游BLOG - 旅行故事和照片日记">
+  <title>漫游BLOG · 旅行日记</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --story-ink:#25352e; --story-clay:#ae7053; --story-paper:#fbf8f0; --story-line:rgba(81,75,64,.16); }
+    body { background:var(--story-paper); }
+    .story-hero { min-height:0; width:calc(100% - 3rem); max-width:1200px; margin:2.5rem auto 0; padding:2.25rem; display:grid; grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr); align-items:center; gap:3.5rem; background:transparent; border:0; box-shadow:none; overflow:visible; }
+    .story-hero-media { padding:1rem; background:#fffdf8; border:2px solid #6b6b4e; box-shadow:0 14px 26px rgba(82,63,42,.15); transform:rotate(-.35deg); }
+    .story-hero-media img { display:block; width:100%; height:360px; object-fit:cover; object-position:center; filter:saturate(.9); }
+    .story-hero-caption { margin:.7rem 0 0; color:#85796c; text-align:center; font-family:cursive; font-size:.82rem; letter-spacing:.08em; }
+    .story-hero-content { width:100%; max-width:540px; margin:0; padding:0 1rem; color:var(--story-ink); }
+    .story-hero-kicker { margin:0 0 1.25rem; color:var(--story-clay); font-size:.76rem; letter-spacing:.28em; font-weight:600; }
+    .story-hero h1 { max-width:540px; margin:0; color:var(--story-ink); font-family:Georgia,'Songti SC','STSong',serif; font-size:clamp(2.7rem,5vw,5rem); font-weight:500; line-height:1.18; letter-spacing:.02em; }
+    .story-hero-lead { max-width:470px; margin:1.3rem 0 0; color:#756e64; font-family:Georgia,'Songti SC',serif; font-size:1.05rem; line-height:1.9; }
+    .story-hero-action { display:inline-flex; align-items:center; gap:.65rem; margin-top:2rem; padding:.8rem 1.25rem; border:1px solid var(--story-clay); border-radius:2px; color:#fff; text-decoration:none; font-size:.78rem; letter-spacing:.08em; background:var(--story-clay); transition:.2s ease; }
+    .story-hero-action:hover { background:var(--story-ink); border-color:var(--story-ink); }
+    .story-content { max-width:1200px; margin:0 auto; padding:5.5rem 2rem 6rem; }
+    .story-section-heading { display:flex; align-items:end; justify-content:space-between; gap:2rem; margin-bottom:2rem; }
+    .story-section-heading small { display:block; margin-bottom:.55rem; color:var(--story-clay); font-size:.7rem; letter-spacing:.24em; font-weight:700; }
+    .story-section-heading h2 { margin:0; color:var(--story-ink); font-family:Georgia,'Songti SC',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:500; }
+    .story-section-heading p { max-width:330px; margin:0; color:#766f65; font-size:.82rem; line-height:1.75; }
+    .destination-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+    .destination-card { overflow:hidden; background:#fffdf8; border:1px solid var(--story-line); box-shadow:0 10px 25px rgba(82,63,42,.07); transition:transform .25s ease,box-shadow .25s ease; }
+    .destination-card:hover { transform:translateY(-5px); box-shadow:0 18px 30px rgba(82,63,42,.13); }
+.destination-image { height:210px; background-position:center; background-size:cover; filter:saturate(.88); }
+    .destination-copy { padding:1.1rem 1.15rem 1.25rem; }
+    .destination-meta { color:var(--story-clay); font-size:.68rem; letter-spacing:.14em; }
+    .destination-copy h3 { margin:.5rem 0 .45rem; color:var(--story-ink); font-family:Georgia,'Songti SC',serif; font-size:1.4rem; font-weight:500; }
+    .destination-copy p { min-height:2.6em; margin:0 0 .9rem; color:#756e64; font-size:.78rem; line-height:1.7; }
+    .destination-link { display:inline-flex; align-items:center; gap:.45rem; color:var(--story-clay); font-size:.72rem; text-decoration:none; letter-spacing:.04em; }.destination-link:hover{text-decoration:underline}
+    .story-note { display:grid; grid-template-columns:1fr 1.4fr; gap:3rem; align-items:center; margin-top:5.5rem; padding:2.5rem 0; border-top:1px solid var(--story-line); border-bottom:1px solid var(--story-line); }
+    .story-note h2 { margin:0; color:var(--story-ink); font-family:Georgia,'Songti SC',serif; font-size:2rem; font-weight:500; }.story-note p{max-width:560px;margin:0;color:#756e64;font-family:Georgia,'Songti SC',serif;font-size:1.05rem;line-height:2}
+    .story-footer { padding:2rem; text-align:center; color:#756e64; font-size:.75rem; border-top:1px solid var(--story-line); }
+    .story-footer a { color:var(--story-clay); text-decoration:none; }
+    @media(max-width:900px){.story-hero{grid-template-columns:1fr;gap:2rem;max-width:760px}.story-hero-content{padding:0}.story-hero-media img{height:360px}.destination-grid{grid-template-columns:repeat(2,1fr)}.story-note{grid-template-columns:1fr;gap:1rem}}
+    @media(max-width:600px){nav{padding:.8rem 0}.story-hero{width:calc(100% - 1.5rem);margin-top:1.25rem;padding:1rem}.story-hero-content{padding:0}.story-hero-media{padding:.65rem}.story-hero-media img{height:250px}.story-hero h1{font-size:3.1rem}.story-hero-lead{font-size:1rem}.story-content{padding:3.5rem 1.25rem 4rem}.story-section-heading{display:block}.story-section-heading p{margin-top:.8rem}.destination-grid{grid-template-columns:1fr}.story-note{margin-top:3.5rem}}
+  </style>
+</head>
+<body>
+<header><div class="container"><nav>
+  <a class="logo" href="index.html"><img src="images/about/logo.jpg" alt="rOamlOOm Logo"></a>
+  <ul class="nav-menu"><li><a href="index.html">Home</a></li><li><a href="stories.html">Stories</a></li><li><a href="vlog.html">Vlog</a></li><li><a href="sketch.html">Sketch</a></li><li><a href="about.html">About</a></li></ul>
+  <div class="nav-actions"><button class="nav-btn" id="search-toggle" title="搜索"><i class="fas fa-search"></i></button><button class="nav-btn" id="theme-toggle" title="切换主题"><i class="fas fa-moon"></i></button><img src="images/about/me.jpeg" alt="个人头像" class="nav-avatar"></div>
+</nav></div></header>
+
+<section class="story-hero"><div class="story-hero-media"><img src="images/about/index.jpg" alt="我的旅行主图"><p class="story-hero-caption">在路上 · 拍照 · 写字</p></div><div class="story-hero-content"><p class="story-hero-kicker">TRAVEL STORIES · 漫游日记</p><h1>走过的地方，<br>后来都变成了故事</h1><p class="story-hero-lead">在路上收集风、阳光和偶然的相遇。把那些仍然想起的片段，慢慢写成一篇日记。</p><a class="story-hero-action" href="post/vitnam.html">阅读最新日记 <i class="fa-solid fa-arrow-right"></i></a></div></section>
+
+<main class="story-content">
+  <div class="story-section-heading"><div><small>DESTINATIONS · 最近目的地</small><h2>每一段路，都值得被记住</h2></div><p>从最新的旅行开始浏览。照片、日期和当时的心情，都会在下一页等你。</p></div>
+  <section class="destination-grid">
+    <article class="destination-card"><div class="destination-image" style="background-image:url('images/about/indexcover.jpg')"></div><div class="destination-copy"><span class="destination-meta">2026 · 02—04</span><h3>越南 · 南越慢旅行</h3><p>从海岛、山野到市井街巷，第一次之后，又在十三年后重新走回南越。</p><a class="destination-link" href="post/vitnam.html">阅读旅行日记 <i class="fa-solid fa-arrow-right"></i></a></div></article>
+    <article class="destination-card"><div class="destination-image" style="background-image:url('images/italy3/images.jpg')"></div><div class="destination-copy"><span class="destination-meta">2025 · 01</span><h3>南意大利</h3><p>罗马与西西里，十二日半自驾的随心探秘。</p><a class="destination-link" href="post/italy3-trip.html">打开故事 <i class="fa-solid fa-arrow-right"></i></a></div></article>
+    <article class="destination-card"><div class="destination-image" style="background-image:url('images/norway2/images.jpg')"></div><div class="destination-copy"><span class="destination-meta">2024 · 02</span><h3>北欧 · 赴十年之约</h3><p>极光、雪地和一场迟到了十年的约定。</p><a class="destination-link" href="post/norway2-trip.html">打开故事 <i class="fa-solid fa-arrow-right"></i></a></div></article>
+  </section>
+  <section class="story-note"><h2>旅行的意义，<br>不只在于去了多少地方。</h2><p>有时是一碗异乡的热汤，有时是一条走错的街，有时只是坐在窗边，看一座城市慢慢亮起来。谢谢你来到这里，和我一起翻开这些故事。</p></section>
+</main>
+
+<div class="search-modal" id="search-modal"><div class="search-modal-content"><input type="text" class="search-input" id="search-input" placeholder="搜索故事、城市..."><div class="search-results" id="search-results"></div></div></div>
+<footer class="story-footer"><p>© 2026 rOamlOOm 漫游BLOG · <a href="stories.html">查看全部旅行故事</a></p></footer>
+<script src="js/main.js"></script>
+</body>
+</html>
